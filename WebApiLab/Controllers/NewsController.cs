@@ -12,7 +12,8 @@ namespace WebApiLab.Controllers
         public string Header { get; set; }
         public string Intro { get; set; }
         public string Paragraf { get; set; }
-        public List<Kategori> Kategori { get; set; }
+
+        public List<Category> Category { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public News()
@@ -21,7 +22,7 @@ namespace WebApiLab.Controllers
 
     }
 
-    public class Kategori
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -173,12 +174,51 @@ namespace WebApiLab.Controllers
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
 
+
             var news2 = new News();
             news2.Header = "Seeded News Story 2";
             news2.Intro = "Lorem ipsum dolor sit amet.";
             news2.Paragraf = "Some more text.";
             news2.Created = DateTime.Now;
             news2.Updated = DateTime.Now;
+            news1.Category = new List<Category>()
+            {
+                new Category() {Name = "Nyheter"}
+            };
+
+
+            var news3 = new News();
+            news1.Header = "Seeded News Story 1";
+            news1.Intro = "Lorem ipsum dolor sit amet.";
+            news1.Paragraf = "Some more text.";
+            news1.Created = DateTime.Now;
+            news1.Updated = DateTime.Now;
+            news1.Category = new List<Category>()
+            {
+                new Category() {Name = "Ekonomi"}
+            };
+
+            var news4 = new News();
+            news1.Header = "Seeded News Story 1";
+            news1.Intro = "Lorem ipsum dolor sit amet.";
+            news1.Paragraf = "Some more text.";
+            news1.Created = DateTime.Now;
+            news1.Updated = DateTime.Now;
+            news1.Category = new List<Category>()
+            {
+                new Category() {Name = "Sport"}
+            };
+
+            var news5 = new News();
+            news1.Header = "Seeded News Story 1";
+            news1.Intro = "Lorem ipsum dolor sit amet.";
+            news1.Paragraf = "Some more text.";
+            news1.Created = DateTime.Now;
+            news1.Updated = DateTime.Now;
+            news1.Category = new List<Category>()
+            {
+                new Category() {Name = "Sport"}
+            };
 
             using (var context = new NewsContext())
             {
