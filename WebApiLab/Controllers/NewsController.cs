@@ -18,7 +18,7 @@ namespace WebApiLab.Controllers
         public string Header { get; set; }
         public string Intro { get; set; }
         public string Paragraf { get; set; }
-        public List<Hashtag> Hashtags { get; set; }
+        public List<Kategori> Kategori { get; set; }
         public DateTime Created { get; set; } 
         public DateTime Updated { get; set; }
         public News()
@@ -27,7 +27,7 @@ namespace WebApiLab.Controllers
 
     }
 
-    public class Hashtag
+    public class Kategori
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -153,7 +153,7 @@ namespace WebApiLab.Controllers
         }
 
         [Route("SeedNews")]
-            public IActionResult SeedNews()
+        public IActionResult SeedNews()
         {
 
             RecreateDatabase();
@@ -178,6 +178,7 @@ namespace WebApiLab.Controllers
             news1.Paragraf = "Some more text.";
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
+            news1.
 
             var news2 = new News();
             news2.Header = "Seeded News Story 2";
