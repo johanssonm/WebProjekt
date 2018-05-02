@@ -106,47 +106,38 @@ namespace WebApiLab.Controllers
         public IActionResult AddNews(News news, CategorySerializer categories)
         {
 
-            if (news.Header == null)
+            if (news.Header == null || categories.CategoryName == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
+                                               // TODO: Validera att rubrik och kategori är unik(?)
             }
-
-            for(int i = 0; i < categories.CategoryName.Length; i++)
-            {
-                var tmpcategory = new Category();
-
-                tmpcategory.Name = categories.CategoryName[i];
-
-                var tmpnewscategory = new NewsCategories()
-                {
-                    News = news,
-                    Category = tmpcategory,
-                };
-
-                using (var context = new NewsContext())
-                {
-                    context.AddRange(tmpcategory, tmpnewscategory);
-                    context.UpdateRange();
-                }
-
-            }
-
-            news.Created = DateTime.Now;
-            news.Updated = DateTime.Now;
-
-            //var category = new Category();
-
-            //var newscategory = new NewsCategories()
-            //{
-            //    News = news,
-            //    Category = category,
-            //};
-
 
             using (var context = new NewsContext())
             {
-                context.AddRange(news);
+                news.Created = DateTime.Now;
+                news.Updated = DateTime.Now;
+                context.Add(news);
                 context.SaveChanges();
+
+
+                for (int i = 0; i < categories.CategoryName.Length; i++)
+                {
+                    var tmpcategory = new Category();
+
+                    tmpcategory.Name = categories.CategoryName[i];
+
+                    var tmpnewscategory = new NewsCategories()
+                    {
+                        News = news,
+                        Category = tmpcategory,
+                    };
+
+                        context.AddRange(tmpcategory, tmpnewscategory);
+                        context.SaveChanges();
+                    
+
+                }
+
             }
 
             var addedMessage = string.Format("Nyheten fick ID {0}", news.Id);
