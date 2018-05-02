@@ -47,37 +47,45 @@
 
                 <h1 class="display-1">Webprojekt &#9729;</h1>
                 <hr />
+                
+                <button id="seedButton" class="btn btn-dark">Seed</button>
 
                 <div>
-                    <h2 class="display-3">Rubrik</h2>
-
-                    <p class="lead">Intro / ingress.</p>
 
                     <div class="form-group">
-                        <!-- <form method="get" action="../news/AddNews"> -->
-                        <label><h3>Add news</h3></label>
-                        <label>Header</label>
-                        <input class="form-control" id="Header" name="Header" placeholder="Cool story bro...">
-                        <label>Intro</label>
-                        <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
-                        <label>Paragraf</label>
-                        <input class="form-control" id="Paragraf" name="Paragraf" placeholder="Paragraftext...">
+
+                        <h3>Add news</h3>
+                        <div class="form-group">
+                            <label>Header</label>
+                            <input class="form-control" id="Header" name="Header" placeholder="Cool story bro...">
+                            <label>Intro</label>
+                            <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
+                            <label>Paragraf</label>
+                            <input class="form-control" id="Paragraf" name="Paragraf" placeholder="Paragraftext...">
+                        </div>
+                        <div class="form-group">
+                        <label>Kategori</label><br/>
+                        <select name="Kategori" size="3" multiple>
+                            <option value="nyheter">Nyheter</option>
+                            <option value="ekonomi">ekonomi</option>
+                            <option value="sport">Sport</option>
+                        </select>
+                        </div>
 
                         <button id="addnewsButton" class="btn btn-dark">Add news</button>
-                        <!-- </form> -->
 
-                    <p>Metagrejer, författare, hashtags etc.</p>
+                        <p>Metagrejer, författare, hashtags etc.</p>
+                    </div>
+            </div>
                 </div>
             </div>
-
-
         </div>
 
 
 
         <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<script src="assets/js/news.js"></script>
 
         <script>
             $("#menu-toggle").click(function (e) {
