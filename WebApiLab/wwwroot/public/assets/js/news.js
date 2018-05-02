@@ -1,4 +1,30 @@
-﻿$("#editnewsButton").click(function () {
+﻿
+function getLocation() {
+    $.ajax({
+        success: function(response){
+            navigator.geolocation.getCurrentPosition(sendLocation)
+        }
+    });
+};
+
+function sendLocation(position) {
+    let pos = position.coords;
+    $.ajax({
+        type: "POST",
+        data: {la: pos.latitude, lo: pos.longitude},
+        url: "",
+        success: function(response){
+            
+        }
+    })
+}
+
+$(function(){
+    getLocation();
+})
+
+
+$("#editnewsButton").click(function () {
     // alert("Knappen funkar");    
 
     let Id = $("#EditId").val();
@@ -13,6 +39,9 @@
         contentType: true,
         processData: true,
         success: function (response) {
+
+            $("#vader").append("<div>Det är 5 grader</div>")
+
             if (response.success) {
                 alert(response.message);
                 console.log("Success");
@@ -188,3 +217,6 @@ $("#usernameButton").click(function () {
 
     });
 });
+
+
+
