@@ -24,7 +24,7 @@ namespace WebApiLab.Controllers
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Nya news
+            modelBuilder.Entity<NewsCategories>().HasKey(x => new { x.CategoryId, x.NewsId });
         }
 
 

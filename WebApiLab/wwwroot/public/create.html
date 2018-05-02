@@ -53,29 +53,32 @@
                 <div>
 
                     <div class="form-group">
+                        <form method="get" action="../news/AddNews">
 
-                        <h3>Add news</h3>
-                        <div class="form-group">
-                            <label>Header</label>
-                            <input class="form-control" id="Header" name="Header" placeholder="Cool story bro...">
-                            <label>Intro</label>
-                            <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
-                            <label>Paragraf</label>
-                            <input class="form-control" id="Paragraf" name="Paragraf" placeholder="Paragraftext...">
-                        </div>
-                        <div class="form-group">
-                        <label>Kategori</label><br/>
-                        <select name="Kategori" size="3" multiple>
-                            <option value="nyheter">Nyheter</option>
-                            <option value="ekonomi">ekonomi</option>
-                            <option value="sport">Sport</option>
-                        </select>
-                        </div>
+                            <h3>Add news</h3>
+                            <div class="form-group">
+                                <label>Header</label>
+                                <input class="form-control" id="Header" name="Header" placeholder="Cool story bro...">
+                                <label>Intro</label>
+                                <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
+                                <label>Paragraf</label>
+                                <input class="form-control" id="Paragraf" name="Paragraf" placeholder="Paragraftext...">
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label><br />
+                                <select id="CategoryName" name="CategoryName" size="3" multiple>
+                                    <option value="Nyheter">Nyheter</option>
+                                    <option value="Ekonomi">Ekonomi</option>
+                                    <option value="Sport">Sport</option>
+                                </select>
+                            </div>
 
-                        <button id="addnewsButton" class="btn btn-dark">Add news</button>
+                            <button id="addnewsButton_tabort" class="btn btn-dark">Add news</button>
+                            
+                        </form>
 
                         <p>Metagrejer, författare, hashtags etc.</p>
-                    </div>
+</div>
             </div>
                 </div>
             </div>
