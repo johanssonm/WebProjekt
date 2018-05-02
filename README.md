@@ -12,11 +12,14 @@
 
 #    Lägga in taggar och söka på dem. Metadata.
 
+    Författare för artikel
+
 #    Mobilanpassad sida.
 
     Söka i sina egna nyheter
 
 #   "See more" för långa brödtexter
+    
 
 #    Välja hur artiklarna ska sorteras.
 
@@ -25,3 +28,8 @@
     Eventsourcing på databasen. Se utvecklingen på artikeln.
 
     Geotaggning. Få nyheter där du är.
+    
+   # Väderwidget, typ väder med hjälp av ort via Ip
+    
+    Posta på FB, Likea
+    

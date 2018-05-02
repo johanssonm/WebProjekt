@@ -38,13 +38,13 @@
 
 
 </div>
-
+    
 <div id="page-content-wrapper">
     <div class="container-fluid">
 
         <a href="#menu-toggle" id="menu-toggle" class="btn btn-dark">&#9776; Meny</a>
 
-        <h1 class="display-1">Webprojekt &#9729;</h1>
+        <h1 class="display-6">Webprojekt &#9729;</h1>
         <hr/>
 
         <div>
@@ -52,11 +52,20 @@
 
             <p class="lead">Intro / ingress.</p>
 
-            <p>
-                <em class="blockquote">
-                    <strong>Paragraftext</strong> går också bra men se upp med de smaksatta varianter som har dykt upp på senare tid – en del innehåller sötningsmedel eller fruktjuice så var noga med att läsa innehållsförteckningen.
-                </em>
-            </p>
+            <div class="form-group">
+                <!--  <form method="get" action="../news/EditNews"> -->
+                <label><h3>Edit news</h3></label>
+                <label>News ID</label>
+                <input class="form-control" id="EditId" name="EditId" placeholder="ID to edit">
+                <label>Header</label>
+                <input class="form-control" id="EditHeader" name="EditHeader" placeholder="New header...">
+                <label>Intro</label>
+                <input class="form-control" id="EditIntro" name="EditIntro" placeholder="New intro...">
+                <label>Paragraf</label>
+                <input class="form-control" id="EditParagraf" name="EditParagraf" placeholder="New paragraf...">
+                <button id="editnewsButton" class="btn btn-dark">Update it</button>
+                <!--</form> -->
+            </div>
 
             <p>Metagrejer, författare, hashtags etc.</p>
         </div>
@@ -64,6 +73,7 @@
 
 
 </div>
+
 
 
 <script src="assets/vendor/jquery/jquery.min.js"></script>
