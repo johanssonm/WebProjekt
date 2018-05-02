@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting.Internal;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApiLab.Controllers
 {
@@ -19,7 +13,7 @@ namespace WebApiLab.Controllers
         public string Intro { get; set; }
         public string Paragraf { get; set; }
         public List<Kategori> Kategori { get; set; }
-        public DateTime Created { get; set; } 
+        public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public News()
         {
@@ -34,7 +28,7 @@ namespace WebApiLab.Controllers
     }
 
     [Route("news")]
-        public class NewsController : Controller
+    public class NewsController : Controller
     {
         [Route("EditNews")]
         public IActionResult EditNews(News news)
@@ -50,7 +44,7 @@ namespace WebApiLab.Controllers
                 result.Intro = news.Intro;
                 result.Paragraf = news.Paragraf;
                 result.Updated = DateTime.Now;
- 
+
                 client.News.Attach(result);
                 var entry = client.Entry(result);
                 entry.State = EntityState.Modified;
@@ -103,7 +97,7 @@ namespace WebApiLab.Controllers
             {
                 client.News.Add(news);
                 client.SaveChanges();
-                
+
             }
 
             var addedMessage = string.Format("Nyheten fick ID {0}", news.Id);
@@ -143,7 +137,7 @@ namespace WebApiLab.Controllers
             }
 
 
-                var countMessage = String.Format("{0} number of news.", count);
+            var countMessage = String.Format("{0} number of news.", count);
 
             return Json(new
             {
@@ -163,12 +157,12 @@ namespace WebApiLab.Controllers
 
             var seedMessage = "Nyheterna seedades...";
 
-                return Json(new
-                {
-                    success = true,
-                    Message = seedMessage
-                });
-            }
+            return Json(new
+            {
+                success = true,
+                Message = seedMessage
+            });
+        }
 
         public void SeedTheNews()
         {
@@ -178,7 +172,6 @@ namespace WebApiLab.Controllers
             news1.Paragraf = "Some more text.";
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
-            news1.
 
             var news2 = new News();
             news2.Header = "Seeded News Story 2";
@@ -189,7 +182,7 @@ namespace WebApiLab.Controllers
 
             using (var context = new NewsContext())
             {
-                context.News.AddRange(news1,news2);
+                context.News.AddRange(news1, news2);
                 context.SaveChanges();
             }
 

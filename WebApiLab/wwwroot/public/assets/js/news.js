@@ -39,9 +39,6 @@ $("#editnewsButton").click(function () {
         contentType: true,
         processData: true,
         success: function (response) {
-
-            $("#vader").append("<div>Det är 5 grader</div>")
-
             if (response.success) {
                 alert(response.message);
                 console.log("Success");
