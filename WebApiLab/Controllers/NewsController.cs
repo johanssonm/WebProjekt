@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 
 namespace WebApiLab.Controllers
@@ -114,6 +115,7 @@ namespace WebApiLab.Controllers
 
             using (var context = new NewsContext())
             {
+                
                 news.Created = DateTime.Now;
                 news.Updated = DateTime.Now;
                 context.Add(news);
@@ -149,8 +151,8 @@ namespace WebApiLab.Controllers
             });
         }
 
-        [Route("ShowAllNews")]
-        public IActionResult ShowAllNews()
+        [Route("JsonFeed")]
+        public IActionResult JsonFeed()
         {
             List<News> news = new List<News>();
 
@@ -159,12 +161,76 @@ namespace WebApiLab.Controllers
                 news = (client.News.ToList());
             }
 
+
             return Json(new
             {
                 success = true,
                 Message = news
             });
         }
+
+        [Route("NewsTable")]
+        public IActionResult NewsTable()
+        {
+            List<News> news = new List<News>();
+
+            using (var client = new NewsContext())
+            {
+                news = (client.News.ToList());
+            }
+
+            var html = ConvertDataTableToHTML(ConvertNewsToDataTable(news));
+
+            return Content(html, "text/html");
+        }
+
+        public DataTable ConvertNewsToDataTable(List<News> list)
+        {
+            var newsList = new List<News>();
+
+            using (DataTable dt = new DataTable())
+            {
+                dt.TableName = "Nyheter";
+                dt.Columns.Add("ID", typeof(int));
+                dt.Columns.Add("Rubrik", typeof(string));
+                dt.Columns.Add("Intro", typeof(string));
+                dt.Columns.Add("Paragraf", typeof(string));
+                //dt.Columns.Add("Kategori", typeof(string));
+                dt.Columns.Add("Skapad", typeof(DateTime));
+                dt.Columns.Add("Ändrad", typeof(DateTime));
+
+                foreach (var news in list) // TODO: Convertera antal kategorier till kategorinamn(?)
+                {
+                    dt.Rows.Add(news.Id, news.Header, news.Intro, news.Paragraf, news.Created, news.Updated);
+                }
+
+                return dt;
+            }
+        }
+
+        public static string ConvertDataTableToHTML(DataTable dt)
+        {
+            string html = "<table>";
+            //add header row
+            html += "<tr>";
+            for (int i = 0; i < dt.Columns.Count; i++)
+                html += "<td>" + dt.Columns[i].ColumnName + "</td>";
+            html += "</tr>";
+            //add rows
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                html += "<tr>";
+                for (int j = 0; j < dt.Columns.Count; j++)
+                    html += "<td>" + dt.Rows[i][j].ToString() + "</td>";
+                html += "</tr>";
+            }
+            html += "</table>";
+            return html;
+        }
+
+
+
+
 
         [Route("CountNews")]
         public IActionResult CountNews()

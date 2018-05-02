@@ -1,0 +1,84 @@
+﻿<html>
+
+<head>
+    <title>Arkivsida</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link href="assets/css/simple-sidebar.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    WebProjekt &#9729;
+                </a>
+            </li>
+            <li>
+                <a href="index.html">Startsida</a>
+            </li>
+
+            <li>
+                <a href="create.html">Skapa artikel</a>
+            </li>
+
+            <li>
+                <a href="edit.html">Redigera artikel</a>
+            </li>
+
+            <li>
+                <a href="article.html">Artikelvy</a>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <a href="#menu-toggle" id="menu-toggle" class="btn btn-dark">&#9776; Meny</a>
+
+            <h1 class="display-1">Webprojekt &#9729;</h1>
+            <hr/>
+
+            <div>
+                <h2 class="display-3">Rubrik</h2>
+
+                <p class="lead">Intro / ingress.</p>
+
+                <p>
+                    <em class="blockquote">
+                        <strong>Paragraftext</strong> går också bra men se upp med de smaksatta varianter som har dykt upp på senare tid – en del innehåller sötningsmedel eller fruktjuice så var noga med att läsa innehållsförteckningen.
+                    </em>
+                </p>
+
+                <p>Metagrejer, författare, hashtags etc.</p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+
+</body>
+
+</html>

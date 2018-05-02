@@ -10,7 +10,7 @@
 
     Formattera text (typsnitt, fetstil)
 
-#    Lägga in taggar och söka på dem. Metadata.
+OK! Lägga in taggar och söka på dem. Metadata. => Vi gjorde kategorier istället
 
     Författare för artikel
 
