@@ -1,0 +1,43 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title>User input</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" style="max-width: 1024px;">
+
+        <form method="get" action="../person/addperson">
+            <div class="form-group col-lg-3">
+                <label>First name</label>
+                <input class="form-control" name="Name" placeholder="Mattias">  
+                <label>Age</label>
+                <input class="form-control" name="Age" placeholder="30">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+</form>        
+
+<form method="get" action="../person/AddPersonValidate">
+    <div class="form-group col-lg-3">
+        <label>First name</label>
+        <input class="form-control" name="Name" placeholder="Mattias">  
+        <label>Age</label>
+        <input class="form-control" name="Age" placeholder="30">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<form method="get" action="../person/AddPersonValidateAttribute">
+    <div class="form-group col-lg-3">
+        <label>First name</label>
+        <input class="form-control" name="Name" placeholder="Mattias">  
+        <label>Age</label>
+        <input class="form-control" name="Age" placeholder="30">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<hr />
+        <div class="container">
+</body>
+</html>

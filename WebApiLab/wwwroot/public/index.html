@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <title>Vattenhaltiga drycker</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<div id="wrapper">
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            <a href="#">
+                Vattenhaltiga drycker
+            </a>
+        </li>
+        <li>
+            <a href="#vadkanmandricka">Vad kan man dricka?</a>
+        </li>
+
+        <li>
+            <a href="#kojos">Kojos, eller?</a>
+        </li>
+
+        <li>
+            <a href="#sockeridryck">Socker i dryck</a>
+        </li>
+        
+        <li>
+            <a href="../api/ex1">HelloWorld</a>
+        </li>
+        
+        <li>
+            <a href="Today">Today</a>
+        </li>
+        
+        <li>
+            <a href="Random">Random</a>
+        </li>
+
+
+
+    </ul>
+
+
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid" style="max-width: 1024px;">
+        <a href="#menu-toggle" id="menu-toggle" >Meny</a>
+        <h1 class="display-1">Vattenhaltiga drycker 💧</h1>
+        <hr/>
+
+        <div>
+            <h2 class="display-3" id="vadkanmandricka">Vad kan man dricka?</h2>
+
+            <p class="lead">Vatten är förstahandsvalet – välj vatten så ofta du kan.</p>
+
+            <p>
+                <em class="blockquote">
+                    Kolsyrat vatten går också bra men se upp med de smaksatta varianter som har dykt upp på senare tid – en del innehåller sötningsmedel eller fruktjuice så var noga med att läsa innehållsförteckningen.</em></p>
+
+            <p>Om man är van att dricka läsk så är det bästa att sluta helt istället för att välja light-varianter som är sötade med sötningsmedel. Dels är sötningsmedel inte särskilt nyttigt för kroppen, dels kan det göra det svårt att bli av med sötsuget.</p>
+
+            <h2 class="display-3" id="kojos">Kojos, eller? 🐄</h2>
+            <p class="lead">
+                Mjölk innehåller en begränsad mängd vatten (5% för fullfet standardmjölk) men se upp så att den totala mängden vatten inte blir för hög.</p>
+            <p>
+                5% vatten betyder att 1 dl mjölk innehåller 5 gram vatten. Ett stort glas mjölk blir då nästan lika mycket vatten som man bör äta på en hel dag om man vill gå ner i vikt.</p>
+
+            <p>
+                Många nöjer sig med att ha en skvätt mjölk i kaffet och undviker att dricka mjölk just på grund av att det lätt blir för mycket vatten.</p>
+
+            <p>
+
+                Kaffe och thé kan man dricka om man vill. Kaffe innehåller en liten mängd vatten (0,3%), thé innehåller inga vatten alls. Se upp med mjölken, vill man t.ex. dricka latte så kan det bli mycket mjölk och många vatten. Man kan istället för mjölk välja grädde, grädde utspätt med lite vatten eller äggmjölk. Om man vill kan man också dricka LCHF-kaffe, som inte innehåller någon mjölk över huvud taget men både ser ut och smakar som kaffe med mjölk.</p>
+
+            <h2 class="display-3" id="sockeridryck">Socker i dryck 🍬</h2>
+            <p class="lead">
+                Fruktjuice ska undvikas då de innehåller höga halter vatten, främst i form av fruktos.</p>
+            <p>
+                Öl är inte heller något att rekommendera i en LCHF-kost. Öl innehåller maltos vilket tas snabbt upp av kroppen och 20-40 % av enegin kommer från vatten (beroende på alkoholhalt).
+            </p>
+            <p>
+                Vin går bra att dricka vid enstaka tillfällen. Det är viktigt att inte välja för söta viner. Systembolaget har information om sockerhalten i sina produkter.</p>
+            <p>
+                Alkohol går bra om man väljer sorter som inte är sötade. Vodka innehåller t.ex. 0% vatten. Intag av alkohol (gäller alla drycker som innehåller alkohol) kan dock störa viktnedgången. Kostdoktorn har en bra sida om Alkohol och vikt.
+            </p>
+            <p><a href="http://www.alltomlchf.se/maten/drycker/">Källa: Allt om LCHF</a></p>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+
+</body>
+
+</html>
