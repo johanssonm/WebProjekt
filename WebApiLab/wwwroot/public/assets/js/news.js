@@ -10,9 +10,9 @@ function getLocation() {
 function sendLocation(position) {
     let pos = position.coords;
     $.ajax({
-        type: "POST",
+        type: "GET",
         data: {la: pos.latitude, lo: pos.longitude},
-        url: "",
+        url: "../api/services/location",
         success: function(response){
             
         }
