@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -220,17 +219,7 @@ namespace WebApiLab.Controllers
                 news = (client.News.ToList());
             }
 
-
-
-            var jsontext = JsonConvert.SerializeObject(news);
-
             return Ok(news);
-            return Json(new
-            {
-                success = true,
-                Message = news
-            });
-
         }
 
         [Route("NewsTable")]
