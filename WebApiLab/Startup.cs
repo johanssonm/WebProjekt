@@ -16,7 +16,13 @@ namespace WebApiLab
             {
                 client.Database.EnsureDeleted();
                 client.Database.EnsureCreated();
+
+                NewsController.SeedTheCategories();
+
+                // NewsController.SeedTheAuthors();
+
             }
+
             WeatherCodes.Init(); //Initializing the weathercodes dictionary.
         }
 

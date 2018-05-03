@@ -5,7 +5,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace WebApiLab.Controllers
 {
@@ -15,36 +21,84 @@ namespace WebApiLab.Controllers
         public string Header { get; set; }
         public string Intro { get; set; }
         public string Paragraf { get; set; }
+        public string FeaturedImage { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public List<NewsCategories> NewsCategorieses { get; set; }
-        public News()
-        {
-        }
+        public List<AuthorsNews> Authornews { get; set; }
 
     }
-
-    public class NewsCategories
-    {
-        public int NewsId { get; set; }
-        public int CategoryId { get; set; }
-
-        public Category Category { get; set; }
-
-        public News News { get; set; }
-
-    }
-
     public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
         public List<NewsCategories> NewsCategories { get; set; }
+
+        public Category()
+        {
+            
+        }
+
+        public Category(string name)
+        {
+            Name = name;
+        }
     }
 
-    public class CategorySerializer
+    public class Author
     {
-        public string[] CategoryName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Avatar { get; set; }
+
+        public List<AuthorsNews> Authornews { get; set; }
+
+        public Author()
+        {
+            
+        }
+
+        public Author(string name)
+        {
+            Name = name;
+            Avatar = $"assets/img/avatar.png";
+        }
+
+    }
+
+    public class AuthorsNews
+    {
+        public int AuthorId { get; set; }
+        public int NewsId { get; set; }
+        public Author Author { get; set; }
+        public News News { get; set; }
+
+        public AuthorsNews(News news, Author author)
+        {
+            News = news;
+            Author = author;
+        }
+    }
+
+    public class NewsCategories
+    {
+        // public int Id { get; set; }
+        public int NewsId { get; set; }
+        public int CategoryId { get; set; }
+
+        // public Category Category { get; set; }
+
+        // public News News { get; set; }
+
+    }
+
+    public class FormHelper
+    {
+        public int[] CategoryId { get; set; }
+        public int AuthorId { get; set; }
+        public string Image { get; set; }
+
     }
 
     [Route("news")]
@@ -104,10 +158,10 @@ namespace WebApiLab.Controllers
         }
 
         [Route("AddNews")]
-        public IActionResult AddNews(News news, CategorySerializer categories)
+        public IActionResult AddNews(News news, FormHelper formhelper)
         {
 
-            if (news.Header == null || categories.CategoryName == null)
+            if (news.Header == null || formhelper.CategoryId == null)
             {
                 return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
                                                // TODO: Validera att rubrik och kategori är unik(?)
@@ -118,24 +172,29 @@ namespace WebApiLab.Controllers
                 
                 news.Created = DateTime.Now;
                 news.Updated = DateTime.Now;
+
                 context.Add(news);
+
+                var author = context.Authors.Single(x => x.Id == formhelper.AuthorId);
+
+                var authornews = new AuthorsNews(news, author);
+
+                context.Add(authornews);
+
                 context.SaveChanges();
 
 
-                for (int i = 0; i < categories.CategoryName.Length; i++)
+                for (int i = 0; i < formhelper.CategoryId.Length; i++)
                 {
-                    var tmpcategory = new Category();
-
-                    tmpcategory.Name = categories.CategoryName[i];
-
+                    
                     var tmpnewscategory = new NewsCategories()
                     {
-                        News = news,
-                        Category = tmpcategory,
+                        NewsId = news.Id,
+                        CategoryId = formhelper.CategoryId[i]
                     };
 
-                        context.AddRange(tmpcategory, tmpnewscategory);
-                        context.SaveChanges();
+                    context.Add(tmpnewscategory);
+                    context.SaveChanges();
                     
 
                 }
@@ -167,6 +226,7 @@ namespace WebApiLab.Controllers
                 success = true,
                 Message = news
             });
+
         }
 
         [Route("NewsTable")]
@@ -228,10 +288,6 @@ namespace WebApiLab.Controllers
             return html;
         }
 
-
-
-
-
         [Route("CountNews")]
         public IActionResult CountNews()
         {
@@ -258,6 +314,10 @@ namespace WebApiLab.Controllers
 
             RecreateDatabase();
 
+            SeedTheCategories();
+
+            SeedTheAuthors();
+
             SeedTheNews();
 
 
@@ -272,28 +332,78 @@ namespace WebApiLab.Controllers
 
         public void SeedTheNews()
         {
+            var context = new NewsContext();
+
             var news1 = new News();
-            news1.Header = "Seeded News Story 1";
+            news1.Header = "En fotbollsartikel";
             news1.Intro = "Lorem ipsum dolor sit amet.";
             news1.Paragraf = "Some more text.";
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
-            
-            var category1 = new Category();
 
-            category1.Name = "Sport";
-
-
-            var newscategory1 = new NewsCategories()
+            using (context)
             {
-                News = news1,
-                Category = category1,
-            };
+                context.Add(news1);
 
+                var result1 = context.Categories.Single(x => x.Id == 3);
+
+                var result2 = context.Categories.Single(x => x.Id == 4);
+
+                var result3 = context.Authors.Single(x => x.Id == 1);
+
+
+                var newscategory1 = new NewsCategories()
+                {
+                    NewsId = news1.Id,
+                    CategoryId = result1.Id
+                };
+
+                var newscategory2 = new NewsCategories()
+                {
+                    NewsId = news1.Id,
+                    CategoryId = result2.Id
+                };
+
+                var authornews = new AuthorsNews(news1, result3);
+
+                context.AddRange(newscategory1,newscategory2, authornews);
+
+                context.SaveChanges();
+            }
+
+        }
+
+        public static void SeedTheCategories()
+        {
+
+            var category1 = new Category("Nyheter");
+            var category2 = new Category("Ekonomi");
+            var category3 = new Category("Sport");
+            var category4 = new Category("Lokalt");
+            var category5 = new Category("Inrikes");
+            var category6 = new Category("Vetenskap");
+            var category7 = new Category("Världen");
 
             using (var context = new NewsContext())
             {
-                context.AddRange(news1,category1,newscategory1);
+                context.AddRange(category1, category2, category3, category4, category5, category6, category7);
+
+                context.SaveChanges();
+            }
+
+        }
+
+        public static void SeedTheAuthors()
+        {
+
+            var author1 = new Author("Godzilla Hårddisksson");
+            var author2 = new Author("Tord Yvel");
+            var author3 = new Author("Billy Texas");
+
+            using (var context = new NewsContext())
+            {
+                context.AddRange(author1, author2, author3);
+
                 context.SaveChanges();
             }
 

@@ -66,24 +66,50 @@
                                 <label>Intro</label>
                                 <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
                                 <label>Paragraf</label>
-                                <input class="form-control" id="Paragraf" name="Paragraf" placeholder="Paragraftext...">
+                                <textarea class="form-control" id="Paragraf" rows="3"></textarea>
                             </div>
+                            
+                            <!--<div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" lang="se">
+                                    <label class="custom-file-label" for="file">Choose file</label>
+
+                                </div>
+                            </div>-->
+
                             <div class="form-group">
-                                <label>Kategori</label><br />
-                                <select id="CategoryName" name="CategoryName" size="3" multiple>
-                                    <option value="Nyheter">Nyheter</option>
-                                    <option value="Ekonomi">Ekonomi</option>
-                                    <option value="Sport">Sport</option>
+
+                                <label>Kategori</label><br/>
+
+                                <select id="CategoryId" name="CategoryId" size="7" class="custom-select custom-select-lg mb-3" multiple>
+
+                                    <option value="1">Nyheter</option>
+                                    <option value="2">Ekonomi</option>
+                                    <option value="3">Sport</option>
+                                    <option value="4">Lokalt</option>
+                                    <option value="5">Inrikes</option>
+                                    <option value="6">Vetenskap</option>
+                                    <option value="7">Världen</option>
+
                                 </select>
                             </div>
+                            
+                        <label>Författare</label><br />
 
-                            <button id="addnewsButton_tabort" class="btn btn-dark">Add news</button>
+                        <select id="AuthorId" name="AuthorId" size="1" class="custom-select custom-select-lg mb-3" single>
+
+                            <option value="1">Godzilla Hårddisksson</option>
+                            <option value="2">Tord Yvel</option>
+                            <option value="3">Billy Texas</option>
+
+                        </select>
+
+                            <button id="addnewsButton_tabort" class="btn btn-dark">Skapa artikel</button>
                             
                         </form>
 
-                        <p>Metagrejer, författare, hashtags etc.</p>
-</div>
-            </div>
+                    </div>
+                   </div>
                 </div>
             </div>
         </div>

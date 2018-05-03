@@ -11,6 +11,8 @@ namespace WebApiLab.Controllers
     public class NewsContext : DbContext
     {
         public DbSet<News> News { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
@@ -25,6 +27,8 @@ namespace WebApiLab.Controllers
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NewsCategories>().HasKey(x => new { x.CategoryId, x.NewsId });
+
+            modelBuilder.Entity<AuthorsNews>().HasKey(x => new { x.AuthorId, x.NewsId });
         }
 
 
