@@ -135,6 +135,27 @@ namespace WebApiLab.Controllers
             return Ok(news);
         }
 
+        [Route("GetNewsCategory")]
+        public List<Category> GetNewsCategory(News news)
+        {
+ 
+            using (var client = new NewsContext())
+            {
+                var newsCategories = (client.NewsCategories.ToList());
+                var categories = (client.Categories.ToList());
+
+                // TODO: Jobbar på en linq för att få fram kategorier
+
+                //List<Category> result =
+                //    from c in categories
+                //    join nc in newsCategories on c.Id equals nc.CategoryId 
+                //    where nc.NewsId == news.Id;
+
+                return categories;
+
+            }
+        }
+
         [Route("RenderArticle")]
         public string RenderArticle(int newsid)
         {
