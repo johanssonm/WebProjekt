@@ -56,6 +56,8 @@
                 <button id="seedButton" class="btn btn-dark">Seed</button>
 
                 <div>
+                    
+                    <div id="message"></div>
 
                     <div class="form-group">
                         <!--<form method="get" action="../news/AddNews">-->
@@ -72,22 +74,20 @@
 
                             <div class="form-group">
 
-                                <label>Kategori</label><br/>
+                            <select id="CategoryId" name="CategoryId" size="7" class="custom-select custom-select-lg mb-3" multiple>
 
-                                <select id="CategoryId" name="CategoryId" size="7" class="custom-select custom-select-lg mb-3" multiple>
+                                <option value="1">Nyheter</option>
+                                <option value="2">Ekonomi</option>
+                                <option value="3">Sport</option>
+                                <option value="4">Lokalt</option>
+                                <option value="5">Inrikes</option>
+                                <option value="6">Vetenskap</option>
+                                <option value="7">Världen</option>
 
-                                    <option value="1">Nyheter</option>
-                                    <option value="2">Ekonomi</option>
-                                    <option value="3">Sport</option>
-                                    <option value="4">Lokalt</option>
-                                    <option value="5">Inrikes</option>
-                                    <option value="6">Vetenskap</option>
-                                    <option value="7">Världen</option>
+                            </select>
+                        </div>
 
-                                </select>
-                            </div>
-                            
-                        <label>Författare</label><br />
+                        <label>Författare</label><br/>
 
                         <select id="AuthorId" name="AuthorId" size="1" class="custom-select custom-select-lg mb-3" single>
 
@@ -101,8 +101,10 @@
                             
                         <!--</form>-->
 
+                        <!--</form>-->
+
                     </div>
-                   </div>
+                </div>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 
 namespace WebApiLab.Controllers
@@ -132,6 +133,45 @@ namespace WebApiLab.Controllers
             }
 
             return Ok(news);
+        }
+
+        [Route("RenderArticle")]
+        public IActionResult RenderArticle(int newsid)
+        {
+            using (var client = new NewsContext())
+            {
+                var article = client.News.Single(x => x.Id == newsid);
+
+                var sb = new StringBuilder();
+
+
+                sb.AppendLine($"<h1>{article.Header}</h1>");
+                sb.AppendLine($"<h3>{article.Intro}</h3>");
+                sb.AppendLine($"<div>{article.Paragraf}</div>");
+
+                string html = sb.ToString();
+
+                return Content(html,"text/html");
+            }
+
+
+        }
+
+        public string RenderHeader()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(
+                "<html><head><title>WebProjekt</title><link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\" integrity=\"sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4\" crossorigin=\"anonymous\"><link href=\"../public/assets/css/simple-sidebar.css\" rel=\"stylesheet\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><div id=\"wrapper\"><div id=\"sidebar-wrapper\"><ul class=\"sidebar-nav\"><li class=\"sidebar-brand\"><a href=\"#\">WebProjekt &#9729;</a></li><li><a href=\"index.html\">Startsida</a></li><li><a href=\"create.html\">Skapa artikel</a></li><li><a href=\"edit.html\">Redigera artikel</a></li><li><a href=\"article.html\">Artikelvy</a></li><li><a href=\"archive.html\">Arkiv</a></li></ul></div><div id=\"page-content-wrapper\"><div class=\"container-fluid\">");
+            return sb.ToString();
+        }
+
+        public string RenderFooter()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("</div></div><script src=\"../public/assets/vendor/jquery/jquery.min.js\"></script><script src=\"../public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js\"></script><script src=\"../public/assets/js/news.js\"></script><script>$(\"#menu-toggle\").click(function(e) {e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\");});</script></body></html>");
+            return sb.ToString();
         }
 
         [Route("NewsTable")]
