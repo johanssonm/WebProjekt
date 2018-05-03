@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace WebApiLab.Controllers
@@ -12,12 +14,23 @@ namespace WebApiLab.Controllers
         public string Header { get; set; }
         public string Intro { get; set; }
         public string Paragraf { get; set; }
-        public List<Category> Category { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+        public List<NewsCategories> NewsCategorieses { get; set; }
         public News()
         {
         }
+
+    }
+
+    public class NewsCategories
+    {
+        public int NewsId { get; set; }
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
+
+        public News News { get; set; }
 
     }
 
@@ -25,6 +38,12 @@ namespace WebApiLab.Controllers
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public List<NewsCategories> NewsCategories { get; set; }
+    }
+
+    public class CategorySerializer
+    {
+        public string[] CategoryName { get; set; }
     }
 
     [Route("news")]
@@ -84,19 +103,40 @@ namespace WebApiLab.Controllers
         }
 
         [Route("AddNews")]
-        public IActionResult AddNews(News news)
+        public IActionResult AddNews(News news, CategorySerializer categories)
         {
-            if (news.Header == null)
-            {
-                return BadRequest(ModelState);
-            }
-            news.Created = DateTime.Now;
-            news.Updated = DateTime.Now;
 
-            using (var client = new NewsContext())
+            if (news.Header == null || categories.CategoryName == null)
             {
-                client.News.Add(news);
-                client.SaveChanges();
+                return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
+                                               // TODO: Validera att rubrik och kategori är unik(?)
+            }
+
+            using (var context = new NewsContext())
+            {
+                news.Created = DateTime.Now;
+                news.Updated = DateTime.Now;
+                context.Add(news);
+                context.SaveChanges();
+
+
+                for (int i = 0; i < categories.CategoryName.Length; i++)
+                {
+                    var tmpcategory = new Category();
+
+                    tmpcategory.Name = categories.CategoryName[i];
+
+                    var tmpnewscategory = new NewsCategories()
+                    {
+                        News = news,
+                        Category = tmpcategory,
+                    };
+
+                        context.AddRange(tmpcategory, tmpnewscategory);
+                        context.SaveChanges();
+                    
+
+                }
 
             }
 
@@ -172,58 +212,22 @@ namespace WebApiLab.Controllers
             news1.Paragraf = "Some more text.";
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
+            
+            var category1 = new Category();
+
+            category1.Name = "Sport";
 
 
-            var news2 = new News();
-            news2.Header = "Seeded News Story 2";
-            news2.Intro = "Lorem ipsum dolor sit amet.";
-            news2.Paragraf = "Some more text.";
-            news2.Created = DateTime.Now;
-            news2.Updated = DateTime.Now;
-            news1.Category = new List<Category>()
+            var newscategory1 = new NewsCategories()
             {
-                new Category() {Name = "Nyheter"}
+                News = news1,
+                Category = category1,
             };
 
-
-            var news3 = new News();
-            news3.Header = "Seeded News Story 3";
-            news3.Intro = "Lorem ipsum dolor sit amet.";
-            news3.Paragraf = "Some more text.";
-            news3.Created = DateTime.Now;
-            news3.Updated = DateTime.Now;
-            news3.Category = new List<Category>()
-            {
-                new Category() {Name = "Nyheter"},
-                new Category() {Name = "Ekonomi"}
-            };
-
-            var news4 = new News();
-            news4.Header = "Seeded News Story 4";
-            news4.Intro = "Lorem ipsum dolor sit amet.";
-            news4.Paragraf = "Some more text.";
-            news4.Created = DateTime.Now;
-            news4.Updated = DateTime.Now;
-            news4.Category = new List<Category>()
-            {
-                new Category() {Name = "Sport"}
-            };
-
-            var news5 = new News();
-            news5.Header = "Seeded News Story 5";
-            news5.Intro = "Lorem ipsum dolor sit amet.";
-            news5.Paragraf = "Some more text.";
-            news5.Created = DateTime.Now;
-            news5.Updated = DateTime.Now;
-            news5.Category = new List<Category>()
-            {
-                new Category() {Name = "Sport"},
-                new Category() {Name = "Nyheter"}
-            };
 
             using (var context = new NewsContext())
             {
-                context.News.AddRange(news1, news2, news3, news4, news5);
+                context.AddRange(news1,category1,newscategory1);
                 context.SaveChanges();
             }
 

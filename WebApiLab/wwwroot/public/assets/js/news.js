@@ -59,16 +59,17 @@ $("#editnewsButton").click(function () {
     });
 });
 
-$("#addnewsButton").click(function () {
+$("#addnewsButton").click(function() {
     // alert("Knappen funkar");    
 
     let Header = $("#Header").val();
     let Intro = $("#Intro").val();
     let Paragraf = $("#Paragraf").val();
+    let CategoryName = $("#CategoryName").val();
 
     $.ajax({
         type: "GET",
-        data: { Header,Intro,Paragraf },
+        data: { Header,Intro,Paragraf,CategoryName },
         url: "../news/AddNews",
         contentType: true,
         processData: true,
