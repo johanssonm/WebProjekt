@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 
@@ -115,7 +114,7 @@ namespace WebApiLab.Controllers
 
             using (var context = new NewsContext())
             {
-                
+
                 news.Created = DateTime.Now;
                 news.Updated = DateTime.Now;
                 context.Add(news);
@@ -134,9 +133,9 @@ namespace WebApiLab.Controllers
                         Category = tmpcategory,
                     };
 
-                        context.AddRange(tmpcategory, tmpnewscategory);
-                        context.SaveChanges();
-                    
+                    context.AddRange(tmpcategory, tmpnewscategory);
+                    context.SaveChanges();
+
 
                 }
 
@@ -162,11 +161,16 @@ namespace WebApiLab.Controllers
             }
 
 
+
+            var jsontext = JsonConvert.SerializeObject(news);
+
+            return Ok(news);
             return Json(new
             {
                 success = true,
                 Message = news
             });
+
         }
 
         [Route("NewsTable")]
@@ -178,6 +182,8 @@ namespace WebApiLab.Controllers
             {
                 news = (client.News.ToList());
             }
+
+
 
             var html = ConvertDataTableToHTML(ConvertNewsToDataTable(news));
 
@@ -278,7 +284,7 @@ namespace WebApiLab.Controllers
             news1.Paragraf = "Some more text.";
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
-            
+
             var category1 = new Category();
 
             category1.Name = "Sport";
@@ -293,7 +299,7 @@ namespace WebApiLab.Controllers
 
             using (var context = new NewsContext())
             {
-                context.AddRange(news1,category1,newscategory1);
+                context.AddRange(news1, category1, newscategory1);
                 context.SaveChanges();
             }
 
