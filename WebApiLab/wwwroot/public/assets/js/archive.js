@@ -24,3 +24,7 @@ $(function(){
 
 })
 
+$("#myTable").prop("class", "table table-striped");
+
+$("#dynatable-query-search-myTable").prop("class", "form-control");
+

@@ -947,7 +947,7 @@
     this.create = function(cell) {
       var $cell = $(cell),
           $link = $('<a></a>', {
-            'class': 'dynatable-sort-header',
+              'class': 'dynatable-sort-header text-dark font-weight-light ',
             href: '#',
             html: $cell.html()
           }),
@@ -1208,7 +1208,7 @@
           }),
           $searchSpan = $('<span></span>', {
             id: 'dynatable-search-' + obj.element.id,
-            'class': 'dynatable-search',
+              'class': 'dynatable-search',
             text: 'Search: '
           }).append($search);
 
@@ -1326,7 +1326,7 @@
     };
 
     this.create = function() {
-      var pageLinks = '<ul id="' + 'dynatable-pagination-links-' + obj.element.id + '" class="' + settings.inputs.paginationClass + '">',
+        var pageLinks = '<nav><ul id="' + 'dynatable-pagination-links-' + obj.element.id + '" class="pagination pagination-lg justify-content-center rounded ' + settings.inputs.paginationClass + '">',
           pageLinkClass = settings.inputs.paginationLinkClass,
           activePageClass = settings.inputs.paginationActiveClass,
           disabledPageClass = settings.inputs.paginationDisabledClass,
@@ -1339,7 +1339,7 @@
             (pages + 1) - settings.inputs.paginationGap[3]
           ];
 
-      pageLinks += '<li><span>Pages: </span></li>';
+        pageLinks += ''; // <li class="page-item"><span class="page-item">Pages: </span></li>
 
       for (var i = 1; i <= pages; i++) {
         if ( (i > breaks[0] && i < breaks[1]) || (i > breaks[2] && i < breaks[3])) {
@@ -1358,7 +1358,7 @@
           breakIndex = $.inArray(i, breaks);
           nextBreak = breaks[breakIndex + 1];
           if (breakIndex > 0 && i !== 1 && nextBreak && nextBreak > (i + 1)) {
-            var ellip = '<li><span class="dynatable-page-break">&hellip;</span></li>';
+            var ellip = '<li><span class="dynatable-page-break page-item">&hellip;</span></li>';
             li = breakIndex < 2 ? ellip + li : li + ellip;
           }
 
@@ -1395,7 +1395,7 @@
     };
 
     this.buildLink = function(page, label, linkClass, conditional, conditionalClass) {
-      var link = '<a data-dynatable-page=' + page + ' class="' + linkClass,
+      var link = '<a data-dynatable-page=' + page + ' class="page-link ' + linkClass,
           li = '<li';
 
       if (conditional) {
