@@ -4,6 +4,7 @@
     <title>WebProjekt</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link href="assets/css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/loader.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
@@ -49,7 +50,7 @@
 
                 <a href="#menu-toggle" id="menu-toggle" class="btn btn-dark">&#9776; Meny</a>
 
-                <h1 class="display-1">Webprojekt &#9729;</h1>
+                <h1 class="display-1">Webprojekt &#9729;<div id="weatherWidget"><div class="loader"></div></div></h1>
                 <hr />
                 
                 <button id="seedButton" class="btn btn-dark">Seed</button>
@@ -57,7 +58,7 @@
                 <div>
 
                     <div class="form-group">
-                        <form method="get" action="../news/AddNews">
+                        <!--<form method="get" action="../news/AddNews">-->
 
                             <h3>Add news</h3>
                             <div class="form-group">
@@ -68,14 +69,6 @@
                                 <label>Paragraf</label>
                                 <textarea class="form-control" id="Paragraf" rows="3"></textarea>
                             </div>
-                            
-                            <!--<div class="form-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="file" lang="se">
-                                    <label class="custom-file-label" for="file">Choose file</label>
-
-                                </div>
-                            </div>-->
 
                             <div class="form-group">
 
@@ -104,9 +97,9 @@
 
                         </select>
 
-                            <button id="addnewsButton_tabort" class="btn btn-dark">Skapa artikel</button>
+                            <button id="addnewsButton" class="btn btn-dark">Skapa artikel</button>
                             
-                        </form>
+                        <!--</form>-->
 
                     </div>
                    </div>
@@ -118,7 +111,9 @@
 
         <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/news.js"></script>
+        <script src="assets/js/news.js"></script>
+        <script src="assets/js/weather.js"></script>
+        <script src="assets/js/create.js"></script>
 
         <script>
             $("#menu-toggle").click(function (e) {

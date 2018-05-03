@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services;
 
 namespace WebApiLab.Controllers
@@ -24,7 +20,7 @@ namespace WebApiLab.Controllers
             var weather = _weatherService.Weather;
             var icon = WeatherCodes.Instance.GetWeatherIcon(weather.WeatherInfo);
 
-            return Content($@"<div><img src='{icon}' />{weather.Temp}</div>");
+            return Content($@"<img src='{icon}' />{weather.Temp}");
 
             return BadRequest("Something went wrong!");
         }
