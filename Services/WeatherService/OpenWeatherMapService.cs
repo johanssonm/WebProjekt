@@ -12,12 +12,7 @@ namespace Services
         private string _apiLink;
         public IWeather Weather { get; private set; }
 
-
-        // api.openweathermap.org/data/2.5/weather?lat=57.708944599999995&lon=11.966970799999999
-
-        // x-api-key
-
-        public OpenWeatherMapService(double latitude, double longitude)
+        public OpenWeatherMapService()
         {
             Weather = new Weather();
 
@@ -26,6 +21,14 @@ namespace Services
                 BaseAddress =
                     new Uri("http://api.openweathermap.org")
             };
+        }
+        // api.openweathermap.org/data/2.5/weather?lat=57.708944599999995&lon=11.966970799999999
+
+        // x-api-key
+
+        public void CallService(double latitude, double longitude)
+        {
+
 
             _apiLink = "/data/2.5/weather?lat=" + $"{latitude.ToString(new CultureInfo("en-US").NumberFormat)}" + "&lon=" + $"{longitude.ToString(new CultureInfo("en-US").NumberFormat)}";
 
@@ -78,7 +81,7 @@ namespace Services
     public class Main
     {
         public float temp { get; set; }
-        public int pressure { get; set; }
+        public float pressure { get; set; }
         public int humidity { get; set; }
         public float temp_min { get; set; }
         public float temp_max { get; set; }
@@ -87,7 +90,7 @@ namespace Services
     public class Wind
     {
         public float speed { get; set; }
-        public int deg { get; set; }
+        public float deg { get; set; }
     }
 
     public class Clouds

@@ -26,6 +26,7 @@ namespace WebApiLab
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkSqlite().AddDbContext<NewsContext>();
+            services.AddSingleton<IWeatherService, OpenWeatherMapService>();
             services.AddMvc();
         }
 

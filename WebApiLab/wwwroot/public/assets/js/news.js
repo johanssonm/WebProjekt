@@ -11,10 +11,10 @@ function sendLocation(position) {
     let pos = position.coords;
     $.ajax({
         type: "GET",
-        data: {la: pos.latitude, lo: pos.longitude},
+        data: {latitude: pos.latitude, longitude: pos.longitude},
         url: "../api/services/location",
         success: function(response){
-            
+            document.getElementById("test").innerHTML = response;
         }
     })
 }
