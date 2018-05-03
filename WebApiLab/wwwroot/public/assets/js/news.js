@@ -21,6 +21,7 @@ function sendLocation(position) {
 
 $(function(){
     getLocation();
+    $("tbody").sortable();
 })
 
 

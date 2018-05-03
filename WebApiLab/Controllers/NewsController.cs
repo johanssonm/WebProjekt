@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -169,7 +168,7 @@ namespace WebApiLab.Controllers
 
             using (var context = new NewsContext())
             {
-                
+
                 news.Created = DateTime.Now;
                 news.Updated = DateTime.Now;
 
@@ -197,6 +196,7 @@ namespace WebApiLab.Controllers
                     context.SaveChanges();
                     
 
+
                 }
 
             }
@@ -221,6 +221,10 @@ namespace WebApiLab.Controllers
             }
 
 
+
+            var jsontext = JsonConvert.SerializeObject(news);
+
+            return Ok(news);
             return Json(new
             {
                 success = true,
@@ -238,6 +242,8 @@ namespace WebApiLab.Controllers
             {
                 news = (client.News.ToList());
             }
+
+
 
             var html = ConvertDataTableToHTML(ConvertNewsToDataTable(news));
 
