@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebApiLab.Controllers
+namespace Persistance
 {
     public class NewsContext : DbContext
     {
@@ -15,9 +11,10 @@ namespace WebApiLab.Controllers
         public DbSet<Author> Authors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                optionsBuilder.UseSqlite("Filename=Newspage.db");
-            }
+        {
+
+            optionsBuilder.UseSqlite("Filename=Newspage.db");
+        }
 
         //public NewsContext(DbContextOptions<NewsContext> options) : base(options)
         //{

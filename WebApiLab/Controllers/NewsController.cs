@@ -1,107 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Persistance;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
+
 
 namespace WebApiLab.Controllers
 {
-    public class News
-    {
-        public int Id { get; set; }
-        public string Header { get; set; }
-        public string Intro { get; set; }
-        public string Paragraf { get; set; }
-        public string FeaturedImage { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        public List<NewsCategories> NewsCategorieses { get; set; }
-        public List<AuthorsNews> Authornews { get; set; }
-
-    }
-    public class Category
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public List<NewsCategories> NewsCategories { get; set; }
-
-        public Category()
-        {
-            
-        }
-
-        public Category(string name)
-        {
-            Name = name;
-        }
-    }
-
-    public class Author
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Avatar { get; set; }
-
-        public List<AuthorsNews> Authornews { get; set; }
-
-        public Author()
-        {
-            
-        }
-
-        public Author(string name)
-        {
-            Name = name;
-            Avatar = $"assets/img/avatar.png";
-        }
-
-    }
-
-    public class AuthorsNews
-    {
-        public int AuthorId { get; set; }
-        public int NewsId { get; set; }
-        public Author Author { get; set; }
-        public News News { get; set; }
-
-        public AuthorsNews(News news, Author author)
-        {
-            News = news;
-            Author = author;
-        }
-    }
-
-    public class NewsCategories
-    {
-        // public int Id { get; set; }
-        public int NewsId { get; set; }
-        public int CategoryId { get; set; }
-
-        // public Category Category { get; set; }
-
-        // public News News { get; set; }
-
-    }
-
-    public class FormHelper
-    {
-        public int[] CategoryId { get; set; }
-        public int AuthorId { get; set; }
-        public string Image { get; set; }
-
-    }
-
     [Route("news")]
     public class NewsController : Controller
     {
+
         [Route("EditNews")]
         public IActionResult EditNews(News news)
         {
@@ -184,7 +96,7 @@ namespace WebApiLab.Controllers
 
                 for (int i = 0; i < formhelper.CategoryId.Length; i++)
                 {
-                    
+
                     var tmpnewscategory = new NewsCategories()
                     {
                         NewsId = news.Id,
@@ -193,7 +105,7 @@ namespace WebApiLab.Controllers
 
                     context.Add(tmpnewscategory);
                     context.SaveChanges();
-                    
+
 
 
                 }
@@ -361,7 +273,7 @@ namespace WebApiLab.Controllers
 
                 var authornews = new AuthorsNews(news1, result3);
 
-                context.AddRange(newscategory1,newscategory2, authornews);
+                context.AddRange(newscategory1, newscategory2, authornews);
 
                 context.SaveChanges();
             }
