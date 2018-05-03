@@ -18,12 +18,13 @@ namespace WebApiLab.Controllers
         }
 
         [Route("location"), HttpGet]
-        public IActionResult GetUserLocation(long longitude, long latitude)
+        public IActionResult GetUserLocation(double latitude, double longitude)
         {
+            _weatherService.CallService(latitude, longitude);
             var weather = _weatherService.Weather;
             var icon = WeatherCodes.Instance.GetWeatherIcon(weather.WeatherInfo);
 
-            return Content($@"<div><img src='{icon}'</div>");
+            return Content($@"<div><img src='{icon}' />{weather.Temp}</div>");
 
             return BadRequest("Something went wrong!");
         }

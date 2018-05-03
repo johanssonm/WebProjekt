@@ -9,8 +9,8 @@ namespace WebProjekt.UnitTests
         [TestMethod]
         public void OpenWeatherMapServiceTest()
         {
-            var service = new OpenWeatherMapService(57.708944599999995, 11.966970799999999);
-
+            var service = new OpenWeatherMapService();
+            service.CallService(57.708944599999995, 11.966970799999999);
         }
     }
 }
