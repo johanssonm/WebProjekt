@@ -136,7 +136,7 @@ namespace WebApiLab.Controllers
         }
 
         [Route("RenderArticle")]
-        public IActionResult RenderArticle(int newsid)
+        public string RenderArticle(int newsid)
         {
             using (var client = new NewsContext())
             {
@@ -149,9 +149,26 @@ namespace WebApiLab.Controllers
                 sb.AppendLine($"<h3>{article.Intro}</h3>");
                 sb.AppendLine($"<div>{article.Paragraf}</div>");
 
+                return sb.ToString();
+            }
+
+
+        }
+
+        [Route("FirstPage")]
+        public IActionResult RenderArticle()
+        {
+            using (var client = new NewsContext())
+            {
+                var sb = new StringBuilder();
+
+                sb.Append(RenderHeader());
+                sb.AppendLine();
+
+
                 string html = sb.ToString();
 
-                return Content(html,"text/html");
+                return Content(html, "text/html");
             }
 
 
@@ -288,9 +305,37 @@ namespace WebApiLab.Controllers
             news1.Created = DateTime.Now;
             news1.Updated = DateTime.Now;
 
+            var news2 = new News();
+            news2.Header = "En fotbollsartikel";
+            news2.Intro = "Lorem ipsum dolor sit amet.";
+            news2.Paragraf = "Some more text.";
+            news2.Created = DateTime.Now;
+            news2.Updated = DateTime.Now;
+
+            var news3 = new News();
+            news3.Header = "En fotbollsartikel";
+            news3.Intro = "Lorem ipsum dolor sit amet.";
+            news3.Paragraf = "Some more text.";
+            news3.Created = DateTime.Now;
+            news3.Updated = DateTime.Now;
+
+            var news4 = new News();
+            news4.Header = "En fotbollsartikel";
+            news4.Intro = "Lorem ipsum dolor sit amet.";
+            news4.Paragraf = "Some more text.";
+            news4.Created = DateTime.Now;
+            news4.Updated = DateTime.Now;
+
+            var news5 = new News();
+            news5.Header = "En fotbollsartikel";
+            news5.Intro = "Lorem ipsum dolor sit amet.";
+            news5.Paragraf = "Some more text.";
+            news5.Created = DateTime.Now;
+            news5.Updated = DateTime.Now;
+
             using (context)
             {
-                context.Add(news1);
+                context.AddRange(news1, news2, news3, news4, news5);
 
                 var result1 = context.Categories.Single(x => x.Id == 3);
 
@@ -311,9 +356,23 @@ namespace WebApiLab.Controllers
                     CategoryId = result2.Id
                 };
 
+                var newscategory3 = new NewsCategories()
+                {
+                    NewsId = news2.Id,
+                    CategoryId = result1.Id
+                };
+
+                var newscategory4 = new NewsCategories()
+                {
+                    NewsId = news3.Id,
+                    CategoryId = result1.Id
+                };
+
                 var authornews = new AuthorsNews(news1, result3);
 
-                context.AddRange(newscategory1, newscategory2, authornews);
+                var authornews1 = new AuthorsNews(news2, result3);
+
+                context.AddRange(newscategory1, newscategory2, newscategory3, newscategory4, authornews, authornews1);
 
                 context.SaveChanges();
             }
