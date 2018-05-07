@@ -17,6 +17,7 @@ namespace Services
 
         private WeatherCodes()
         {
+            //TODO Göra något åt denna mess.
             weatherCodes = new Dictionary<int, string>
             {
                 {200, "http://openweathermap.org/img/w/11d.png"},

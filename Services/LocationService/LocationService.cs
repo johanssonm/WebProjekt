@@ -3,6 +3,7 @@ using System;
 
 namespace Services
 {
+    //TODO ta bort helt, används inte
     public class LocationService : ILocationService
     {
         private string _location;

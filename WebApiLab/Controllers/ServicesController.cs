@@ -16,6 +16,7 @@ namespace WebApiLab.Controllers
         [Route("location"), HttpGet]
         public IActionResult GetUserLocation(double latitude, double longitude)
         {
+            //TODO Gör ett objekt av positionen istället för att använda typvärden.
             _weatherService.CallService(latitude, longitude);
             var weather = _weatherService.Weather;
             var icon = WeatherCodes.Instance.GetWeatherIcon(weather.WeatherInfo);
