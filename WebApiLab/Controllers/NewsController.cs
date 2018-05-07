@@ -8,11 +8,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using Services.OutputServices;
 
 
 namespace WebApiLab.Controllers
 {
-    [Route("news")] //:TODO: Döp om route. I.g. ta bort news från alla undersidor
+    [Route("News")] //:TODO: Döp om route. e.g. ta bort news från alla undersidor
     public class NewsController : Controller
     {
 
@@ -171,46 +172,11 @@ namespace WebApiLab.Controllers
    
         }
 
-        [Route("RenderArticle")]    //TODO: Flytta till ett interface
-        public IActionResult RenderArticle(int newsid)
+
+        [Route("SingleArticle")]
+        public IActionResult SingleArticle(News news)
         {
-            using (var client = new NewsContext())
-            {
-                var article = client.News.Single(x => x.Id == newsid);
-
-                var sb = new StringBuilder();
-
-                sb.AppendLine($"<h1>{article.Header}</h1>");
-                sb.AppendLine($"<h3>{article.Intro}</h3>");
-                sb.AppendLine($"<div>{article.Paragraf}</div>");
-
-                string html = sb.ToString();
-
-                return Content(html, "text/html");
-            }
-
-
-        }
-
-        [Route("RenderHTMLArticle")] //TODO: Ta bort anonym typ
-        public IActionResult RenderHTMLArticle(int newsid)
-        {
-            using (var client = new NewsContext())
-            {
-                var article = client.News.Single(x => x.Id == newsid);
-
-                var sb = new StringBuilder();
-
-                sb.AppendLine($"<div><h2 class=\"display-3\">{article.Header}</h2>" +
-                              $"<p class=\"lead\">{article.Intro}</p>" +
-                              $"<em class=\"blockquote\">{article.Paragraf}</em> </div>");
-
-                string html = sb.ToString();
-
-                return Content(html, "text/html");
-            }
-
-
+            return Content(HtmlOutput.RenderArticle(news), "text/html");
         }
 
 
@@ -276,7 +242,7 @@ namespace WebApiLab.Controllers
             SeedTheNews();
 
 
-            var seedMessage = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Nyheterna seedades...\r\n</div>";
+            var seedMessage = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Databasen initierades med nyheter, kategorier och författare... \r\n</div>";
 
             return Json(new
             {
@@ -285,7 +251,7 @@ namespace WebApiLab.Controllers
             });
         }
 
-        public void SeedTheNews() // TODO: Kanske flytta till en testdata-behållare
+        public void SeedTheNews() // TODO: Kanske flytta till en testdata-repository
         {
             var context = new NewsContext();
 
