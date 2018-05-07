@@ -2,19 +2,19 @@
 
 <WebApiLab>
   Controllers
-    **NewsController.cs**
-      TODO: Döp om route. I.g. ta bort news från alla undersidor
-      TODO: Ta bort anonym typ
-      TODO: Märk upp meddelande för modelstate
-      TODO: Flytta till ett interface
-      TODO: Flytta till ett interface
-      TODO: Ta bort anonym typ
-      TODO: Flytta till ett interface
-      TODO: Hitta på ett bättre namn(?)
-      TODO: Kanske flytta till en testdata-behållare
-      TODO: Kanske flytta till en testdata-behållare
-      TODO: Kanske flytta till en testdata-behållare
-      TODO: Kanske flytta till db-services
+    ###**NewsController.cs**
+      #TODO: Döp om route. I.g. ta bort news från alla undersidor
+      #TODO: Ta bort anonym typ
+     #TODO: Märk upp meddelande för modelstate
+      #TODO: Flytta till ett interface
+      #TODO: Flytta till ett interface
+      #TODO: Ta bort anonym typ
+      #TODO: Flytta till ett interface
+      #TODO: Hitta på ett bättre namn(?)
+      #TODO: Kanske flytta till en testdata-behållare
+      #TODO: Kanske flytta till en testdata-behållare
+      #TODO: Kanske flytta till en testdata-behållare
+      #TODO: Kanske flytta till db-services
   wwwroot
     public
       assets
