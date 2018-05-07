@@ -1,7 +1,5 @@
 ### Cleancode
 
-<WebApiLab>
-  Controllers
     ###**NewsController.cs**
       #TODO: Döp om route. I.g. ta bort news från alla undersidor
       #TODO: Ta bort anonym typ
