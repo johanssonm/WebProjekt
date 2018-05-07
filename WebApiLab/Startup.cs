@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Domain;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace WebApiLab
         {
             services.AddEntityFrameworkSqlite().AddDbContext<NewsContext>();
             services.AddSingleton<IWeatherService, OpenWeatherMapService>();
-            //services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>(x => new UnitOfWork(new NewsContext()));
             services.AddMvc();
         }
 

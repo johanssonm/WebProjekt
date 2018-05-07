@@ -14,12 +14,12 @@ namespace WebApiLab.Controllers
     [Route("News")] //:TODO: Döp om route. e.g. ta bort news från alla undersidor
     public class NewsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork = new UnitOfWork(new NewsContext());
+        private readonly IUnitOfWork _unitOfWork;
 
-        //public NewsController(IUnitOfWork unitOfWork)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //}
+        public NewsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         [Route("EditNews")]
         public IActionResult EditNews(News news)
