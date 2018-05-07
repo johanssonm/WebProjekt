@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
+using Services.OutputServices;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
-using Services.OutputServices;
 
 
 namespace WebApiLab.Controllers
@@ -16,6 +14,12 @@ namespace WebApiLab.Controllers
     [Route("News")] //:TODO: Döp om route. e.g. ta bort news från alla undersidor
     public class NewsController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork = new UnitOfWork(new NewsContext());
+
+        //public NewsController(IUnitOfWork unitOfWork)
+        //{
+        //    _unitOfWork = unitOfWork;
+        //}
 
         [Route("EditNews")]
         public IActionResult EditNews(News news)
@@ -77,7 +81,7 @@ namespace WebApiLab.Controllers
             if (news.Header == null || formhelper.CategoryId == null)
             {
                 return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
-                                              
+
             }
 
             using (var context = new NewsContext())
@@ -129,10 +133,7 @@ namespace WebApiLab.Controllers
         {
             List<News> news = new List<News>();
 
-            using (var client = new NewsContext())
-            {
-                news = (client.News.ToList());
-            }
+            news = _unitOfWork.News.GetAll().ToList();
 
             return Ok(news);
         }
@@ -140,7 +141,7 @@ namespace WebApiLab.Controllers
         [Route("GetNewsCategory")]
         public List<Category> GetNewsCategory(News news)
         {
- 
+
             using (var client = new NewsContext())
             {
                 var newsCategories = (client.NewsCategories.ToList());
@@ -154,22 +155,22 @@ namespace WebApiLab.Controllers
         [Route("RenderCard")]
         public string RenderCard(News news) //TODO: Flytta till ett interface
         {
-                var sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-                sb.Append($"<div class=\"card \" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
-                sb.AppendLine("<div class=\"card-body\">");
-                sb.AppendLine($"<h5 class=\"card-title\">{news.Header}</h5>");
-                sb.AppendLine($"<p class=\"card-text\">{news.Intro}</p>");
-                sb.AppendLine($"<a href=\"/news/RenderArticle?newsid={news.Id}\" class=\"btn btn-dark\">Läs mer</a>\r\n  </div>\r\n</div>");
-
-
-
-                string html = sb.ToString();
+            sb.Append($"<div class=\"card \" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
+            sb.AppendLine("<div class=\"card-body\">");
+            sb.AppendLine($"<h5 class=\"card-title\">{news.Header}</h5>");
+            sb.AppendLine($"<p class=\"card-text\">{news.Intro}</p>");
+            sb.AppendLine($"<a href=\"/news/RenderArticle?newsid={news.Id}\" class=\"btn btn-dark\">Läs mer</a>\r\n  </div>\r\n</div>");
 
 
-                return html;
 
-   
+            string html = sb.ToString();
+
+
+            return html;
+
+
         }
 
 
@@ -188,7 +189,7 @@ namespace WebApiLab.Controllers
             {
 
 
-  
+
                 var sb = new StringBuilder();
 
                 foreach (var news in client.News.ToList())
@@ -208,9 +209,9 @@ namespace WebApiLab.Controllers
 
 
             }
-            }
+        }
 
-        [Route("CountNews")] 
+        [Route("CountNews")]
         public IActionResult CountNews()
         {
             int count = 0;

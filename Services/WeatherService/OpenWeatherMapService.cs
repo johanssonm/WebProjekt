@@ -43,7 +43,7 @@ namespace Services
             var contents = await response.Content.ReadAsStringAsync();
 
             var root = JsonConvert.DeserializeObject<Rootobject>(contents);
-            Weather.SetTemp(root.main.temp - 273.15); //TODO Magic numbers
+            Weather.SetTemp(root.main.temp);
             Weather.WeatherInfo = root.weather[0].id;
         }
     }

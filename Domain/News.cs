@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -11,10 +10,9 @@ namespace Domain
         public string Intro { get; set; }
         public string Paragraf { get; set; }
 
-        public DateTime Created { get; set; } 
+        public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public List<NewsCategories> NewsCategories { get; set; }
         public List<AuthorsNews> Authornews { get; set; }
-
     }
 }

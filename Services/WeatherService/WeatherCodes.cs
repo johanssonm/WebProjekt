@@ -6,80 +6,79 @@ namespace Services
     public class WeatherCodes
     {
         public static WeatherCodes Instance { get; private set; }
-        private Dictionary<int, string> weatherCodes;
+        private readonly Dictionary<int, string> _weatherCodes;
+        private readonly string _imgLink = "http://openweathermap.org/img/w/";
+        private readonly string _pngSuffix = ".png";
 
         public string GetWeatherIcon(int code)
         {
-            var icon = weatherCodes.Where(c => c.Key == code).Select(i => i.Value).FirstOrDefault();
-
-            return icon;
+            return _weatherCodes.Where(c => c.Key == code).Select(i => i.Value).FirstOrDefault();
         }
 
         private WeatherCodes()
         {
-            //TODO Göra något åt denna mess.
-            weatherCodes = new Dictionary<int, string>
+            _weatherCodes = new Dictionary<int, string>
             {
-                {200, "http://openweathermap.org/img/w/11d.png"},
-                {201, "http://openweathermap.org/img/w/11d.png"},
-                {202, "http://openweathermap.org/img/w/11d.png"},
-                {210, "http://openweathermap.org/img/w/11d.png" },
-                {211, "http://openweathermap.org/img/w/11d.png" },
-                {212, "http://openweathermap.org/img/w/11d.png" },
-                {221, "http://openweathermap.org/img/w/11d.png" },
-                {230, "http://openweathermap.org/img/w/11d.png" },
-                {231, "http://openweathermap.org/img/w/11d.png" },
-                {232, "http://openweathermap.org/img/w/11d.png" },
+                {200, $"{_imgLink}11d{_pngSuffix}"},
+                {201, $"{_imgLink}11d{_pngSuffix}"},
+                {202, $"{_imgLink}11d{_pngSuffix}"},
+                {210, $"{_imgLink}11d{_pngSuffix}" },
+                {211, $"{_imgLink}11d{_pngSuffix}" },
+                {212, $"{_imgLink}11d{_pngSuffix}" },
+                {221, $"{_imgLink}11d{_pngSuffix}" },
+                {230, $"{_imgLink}11d{_pngSuffix}" },
+                {231, $"{_imgLink}11d{_pngSuffix}" },
+                {232, $"{_imgLink}11d{_pngSuffix}" },
                 //
-                {300, "http://openweathermap.org/img/w/09d.png" },
-                {301, "http://openweathermap.org/img/w/09d.png" },
-                {302, "http://openweathermap.org/img/w/09d.png" },
-                {310, "http://openweathermap.org/img/w/09d.png" },
-                {311, "http://openweathermap.org/img/w/09d.png" },
-                {312, "http://openweathermap.org/img/w/09d.png" },
-                {313, "http://openweathermap.org/img/w/09d.png" },
-                {314, "http://openweathermap.org/img/w/09d.png" },
-                {321, "http://openweathermap.org/img/w/09d.png" },
+                {300, $"{_imgLink}09d{_pngSuffix}" },
+                {301, $"{_imgLink}09d{_pngSuffix}" },
+                {302, $"{_imgLink}09d{_pngSuffix}" },
+                {310, $"{_imgLink}09d{_pngSuffix}" },
+                {311, $"{_imgLink}09d{_pngSuffix}" },
+                {312, $"{_imgLink}09d{_pngSuffix}" },
+                {313, $"{_imgLink}09d{_pngSuffix}" },
+                {314, $"{_imgLink}09d{_pngSuffix}" },
+                {321, $"{_imgLink}09d{_pngSuffix}" },
                 //
-                {500, "http://openweathermap.org/img/w/10d.png" },
-                {501, "http://openweathermap.org/img/w/10d.png" },
-                {502, "http://openweathermap.org/img/w/10d.png" },
-                {503, "http://openweathermap.org/img/w/10d.png" },
-                {504, "http://openweathermap.org/img/w/10d.png" },
-                {511, "http://openweathermap.org/img/w/13d.png" },
-                {520, "http://openweathermap.org/img/w/09d.png" },
-                {521, "http://openweathermap.org/img/w/09d.png" },
-                {522, "http://openweathermap.org/img/w/09d.png" },
-                {531, "http://openweathermap.org/img/w/09d.png" },
+                {500, $"{_imgLink}10d{_pngSuffix}" },
+                {501, $"{_imgLink}10d{_pngSuffix}" },
+                {502, $"{_imgLink}10d{_pngSuffix}" },
+                {503, $"{_imgLink}10d{_pngSuffix}" },
+                {504, $"{_imgLink}10d{_pngSuffix}" },
+                {511, $"{_imgLink}13d{_pngSuffix}" },
+                {520, $"{_imgLink}09d{_pngSuffix}" },
+                {521, $"{_imgLink}09d{_pngSuffix}" },
+                {522, $"{_imgLink}09d{_pngSuffix}" },
+                {531, $"{_imgLink}09d{_pngSuffix}" },
                 //
-                {600, "http://openweathermap.org/img/w/13d.png" },
-                {601, "http://openweathermap.org/img/w/13d.png" },
-                {602, "http://openweathermap.org/img/w/13d.png" },
-                {611, "http://openweathermap.org/img/w/13d.png" },
-                {612, "http://openweathermap.org/img/w/13d.png" },
-                {615, "http://openweathermap.org/img/w/13d.png" },
-                {616, "http://openweathermap.org/img/w/13d.png" },
-                {620, "http://openweathermap.org/img/w/13d.png" },
-                {621, "http://openweathermap.org/img/w/13d.png" },
-                {622, "http://openweathermap.org/img/w/13d.png" },
+                {600, $"{_imgLink}13d{_pngSuffix}" },
+                {601, $"{_imgLink}13d{_pngSuffix}" },
+                {602, $"{_imgLink}13d{_pngSuffix}" },
+                {611, $"{_imgLink}13d{_pngSuffix}" },
+                {612, $"{_imgLink}13d{_pngSuffix}" },
+                {615, $"{_imgLink}13d{_pngSuffix}" },
+                {616, $"{_imgLink}13d{_pngSuffix}" },
+                {620, $"{_imgLink}13d{_pngSuffix}" },
+                {621, $"{_imgLink}13d{_pngSuffix}" },
+                {622, $"{_imgLink}13d{_pngSuffix}" },
                 //
-                {701, "http://openweathermap.org/img/w/50d.png" },
-                {711, "http://openweathermap.org/img/w/50d.png" },
-                {721, "http://openweathermap.org/img/w/50d.png" },
-                {731, "http://openweathermap.org/img/w/50d.png" },
-                {741, "http://openweathermap.org/img/w/50d.png" },
-                {751, "http://openweathermap.org/img/w/50d.png" },
-                {761, "http://openweathermap.org/img/w/50d.png" },
-                {762, "http://openweathermap.org/img/w/50d.png" },
-                {771, "http://openweathermap.org/img/w/50d.png" },
-                {781, "http://openweathermap.org/img/w/50d.png" },
+                {701, $"{_imgLink}50d{_pngSuffix}" },
+                {711, $"{_imgLink}50d{_pngSuffix}" },
+                {721, $"{_imgLink}50d{_pngSuffix}" },
+                {731, $"{_imgLink}50d{_pngSuffix}" },
+                {741, $"{_imgLink}50d{_pngSuffix}" },
+                {751, $"{_imgLink}50d{_pngSuffix}" },
+                {761, $"{_imgLink}50d{_pngSuffix}" },
+                {762, $"{_imgLink}50d{_pngSuffix}" },
+                {771, $"{_imgLink}50d{_pngSuffix}" },
+                {781, $"{_imgLink}50d{_pngSuffix}" },
                 //
-                {800, "http://openweathermap.org/img/w/01d.png" },
+                {800, $"{_imgLink}01d{_pngSuffix}" },
                 //
-                {801, "http://openweathermap.org/img/w/02d.png" },
-                {802, "http://openweathermap.org/img/w/03d.png" },
-                {803, "http://openweathermap.org/img/w/04d.png" },
-                {804, "http://openweathermap.org/img/w/04d.png" }
+                {801, $"{_imgLink}02d{_pngSuffix}" },
+                {802, $"{_imgLink}03d{_pngSuffix}" },
+                {803, $"{_imgLink}04d{_pngSuffix}" },
+                {804, $"{_imgLink}04d{_pngSuffix}" }
             };
         }
 
