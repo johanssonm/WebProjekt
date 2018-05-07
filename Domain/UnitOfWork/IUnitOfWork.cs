@@ -6,6 +6,9 @@ namespace Domain
     {
         INewsRepository News { get; }
         IAuthorRepository Author { get; }
+        IAuthorNewsRepository AuthorNews { get; }
+        ICategoryRepository Category { get; }
+        INewsCategoriesRepository NewsCategories { get; }
         int Complete();
     }
 }

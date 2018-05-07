@@ -22,8 +22,6 @@ namespace WebApiLab.Controllers
             var icon = WeatherCodes.Instance.GetWeatherIcon(weather.WeatherInfo);
 
             return Content($@"<img src='{icon}' />{weather.Temp}");
-
-            return BadRequest("Something went wrong!");
         }
     }
 }
