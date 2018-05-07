@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace WebApiLab.Controllers
 {
-    [Route("news")]
+    [Route("news")] //:TODO: Döp om route. I.g. ta bort news från alla undersidor
     public class NewsController : Controller
     {
 
@@ -48,7 +48,7 @@ namespace WebApiLab.Controllers
         }
 
         [Route("RemoveNews")]
-        public IActionResult RemoveNews(int? newsid)
+        public IActionResult RemoveNews(int? newsid) //TODO: Ta bort anonym typ
         {
 
             using (var client = new NewsContext())
@@ -76,7 +76,7 @@ namespace WebApiLab.Controllers
             if (news.Header == null || formhelper.CategoryId == null)
             {
                 return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
-                                               // TODO: Validera att rubrik och kategori är unik(?)
+                                              
             }
 
             using (var context = new NewsContext())
@@ -145,20 +145,13 @@ namespace WebApiLab.Controllers
                 var newsCategories = (client.NewsCategories.ToList());
                 var categories = (client.Categories.ToList());
 
-                // TODO: Jobbar på en linq för att få fram kategorier
-
-                //List<Category> result =
-                //    from c in categories
-                //    join nc in newsCategories on c.Id equals nc.CategoryId
-                //    where nc.NewsId == news.Id;
-
                 return categories;
 
             }
         }
 
         [Route("RenderCard")]
-        public string RenderCard(News news)
+        public string RenderCard(News news) //TODO: Flytta till ett interface
         {
                 var sb = new StringBuilder();
 
@@ -178,7 +171,7 @@ namespace WebApiLab.Controllers
    
         }
 
-        [Route("RenderArticle")]
+        [Route("RenderArticle")]    //TODO: Flytta till ett interface
         public IActionResult RenderArticle(int newsid)
         {
             using (var client = new NewsContext())
@@ -199,7 +192,7 @@ namespace WebApiLab.Controllers
 
         }
 
-        [Route("RenderHTMLArticle")]
+        [Route("RenderHTMLArticle")] //TODO: Ta bort anonym typ
         public IActionResult RenderHTMLArticle(int newsid)
         {
             using (var client = new NewsContext())
@@ -222,7 +215,7 @@ namespace WebApiLab.Controllers
 
 
 
-        [Route("FirstPage")]
+        [Route("FirstPage")] //TODO: Flytta till ett interface
         public IActionResult FirstPage()
         {
             using (var client = new NewsContext())
@@ -251,7 +244,7 @@ namespace WebApiLab.Controllers
             }
             }
 
-        [Route("CountNews")]
+        [Route("CountNews")] 
         public IActionResult CountNews()
         {
             int count = 0;
@@ -260,7 +253,6 @@ namespace WebApiLab.Controllers
             {
                 count = client.News.Count();
             }
-
 
             var countMessage = String.Format("{0} number of news.", count);
 
@@ -272,7 +264,7 @@ namespace WebApiLab.Controllers
         }
 
         [Route("SeedNews")]
-        public IActionResult SeedNews()
+        public IActionResult SeedNews() //TODO: Hitta på ett bättre namn(?)
         {
 
             RecreateDatabase();
@@ -293,7 +285,7 @@ namespace WebApiLab.Controllers
             });
         }
 
-        public void SeedTheNews()
+        public void SeedTheNews() // TODO: Kanske flytta till en testdata-behållare
         {
             var context = new NewsContext();
 
@@ -378,7 +370,7 @@ namespace WebApiLab.Controllers
 
         }
 
-        public static void SeedTheCategories()
+        public static void SeedTheCategories()   // TODO: Kanske flytta till en testdata-behållare
         {
 
             var category1 = new Category("Nyheter");
@@ -398,7 +390,7 @@ namespace WebApiLab.Controllers
 
         }
 
-        public static void SeedTheAuthors()
+        public static void SeedTheAuthors()  // TODO: Kanske flytta till en testdata-behållare
         {
 
             var author1 = new Author("Godzilla Hårddisksson");
@@ -414,7 +406,7 @@ namespace WebApiLab.Controllers
 
         }
 
-        private void RecreateDatabase()
+        private void RecreateDatabase()  // TODO: Kanske flytta till db-services
         {
             using (var client = new NewsContext())
             {
