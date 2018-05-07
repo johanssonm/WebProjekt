@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 
 namespace WebApiLab.Controllers
@@ -148,7 +149,7 @@ namespace WebApiLab.Controllers
 
                 //List<Category> result =
                 //    from c in categories
-                //    join nc in newsCategories on c.Id equals nc.CategoryId 
+                //    join nc in newsCategories on c.Id equals nc.CategoryId
                 //    where nc.NewsId == news.Id;
 
                 return categories;
@@ -156,8 +157,29 @@ namespace WebApiLab.Controllers
             }
         }
 
+        [Route("RenderCard")]
+        public string RenderCard(News news)
+        {
+                var sb = new StringBuilder();
+
+                sb.Append($"<div class=\"card\" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
+                sb.AppendLine("<div class=\"card-body\">");
+                sb.AppendLine($"<h5 class=\"card-title\">{news.Header}</h5>");
+                sb.AppendLine($"<p class=\"card-text\">{news.Intro}</p>");
+                sb.AppendLine($"<a href=\"/news/RenderArticle?newsid={news.Id}\" class=\"btn btn-dark\">Läs mer</a>\r\n  </div>\r\n</div>");
+
+
+
+                string html = sb.ToString();
+
+
+                return html;
+
+   
+        }
+
         [Route("RenderArticle")]
-        public string RenderArticle(int newsid)
+        public IActionResult RenderArticle(int newsid)
         {
             using (var client = new NewsContext())
             {
@@ -165,27 +187,9 @@ namespace WebApiLab.Controllers
 
                 var sb = new StringBuilder();
 
-
                 sb.AppendLine($"<h1>{article.Header}</h1>");
                 sb.AppendLine($"<h3>{article.Intro}</h3>");
                 sb.AppendLine($"<div>{article.Paragraf}</div>");
-
-                return sb.ToString();
-            }
-
-
-        }
-
-        [Route("FirstPage")]
-        public IActionResult RenderArticle()
-        {
-            using (var client = new NewsContext())
-            {
-                var sb = new StringBuilder();
-
-                sb.Append(RenderHeader());
-                sb.AppendLine();
-
 
                 string html = sb.ToString();
 
@@ -194,6 +198,58 @@ namespace WebApiLab.Controllers
 
 
         }
+
+        [Route("RenderHTMLArticle")]
+        public IActionResult RenderHTMLArticle(int newsid)
+        {
+            using (var client = new NewsContext())
+            {
+                var article = client.News.Single(x => x.Id == newsid);
+
+                var sb = new StringBuilder();
+
+                sb.AppendLine($"<div><h2 class=\"display-3\">{article.Header}</h2>" +
+                              $"<p class=\"lead\">{article.Intro}</p>" +
+                              $"<em class=\"blockquote\">{article.Paragraf}</em> </div>");
+
+                string html = sb.ToString();
+
+                return Content(html, "text/html");
+            }
+
+
+        }
+
+
+
+        [Route("FirstPage")]
+        public IActionResult FirstPage()
+        {
+            using (var client = new NewsContext())
+            {
+
+
+  
+                var sb = new StringBuilder();
+
+                foreach (var news in client.News.ToList())
+                {
+                    sb.Append(RenderCard(news));
+                }
+
+
+                string html = sb.ToString();
+
+
+                return Json(new
+                {
+                    success = true,
+                    Message = html
+                });
+
+
+            }
+            }
 
         public string RenderHeader()
         {
@@ -306,7 +362,7 @@ namespace WebApiLab.Controllers
             SeedTheNews();
 
 
-            var seedMessage = "Nyheterna seedades...";
+            var seedMessage = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Nyheterna seedades...\r\n</div>";
 
             return Json(new
             {
@@ -327,28 +383,28 @@ namespace WebApiLab.Controllers
             news1.Updated = DateTime.Now;
 
             var news2 = new News();
-            news2.Header = "En fotbollsartikel";
+            news2.Header = "En lokal artikel";
             news2.Intro = "Lorem ipsum dolor sit amet.";
             news2.Paragraf = "Some more text.";
             news2.Created = DateTime.Now;
             news2.Updated = DateTime.Now;
 
             var news3 = new News();
-            news3.Header = "En fotbollsartikel";
+            news3.Header = "En krönika";
             news3.Intro = "Lorem ipsum dolor sit amet.";
             news3.Paragraf = "Some more text.";
             news3.Created = DateTime.Now;
             news3.Updated = DateTime.Now;
 
             var news4 = new News();
-            news4.Header = "En fotbollsartikel";
+            news4.Header = "Ett reportage om Kicki Danielsson";
             news4.Intro = "Lorem ipsum dolor sit amet.";
             news4.Paragraf = "Some more text.";
             news4.Created = DateTime.Now;
             news4.Updated = DateTime.Now;
 
             var news5 = new News();
-            news5.Header = "En fotbollsartikel";
+            news5.Header = "Ny kungabäbis";
             news5.Intro = "Lorem ipsum dolor sit amet.";
             news5.Paragraf = "Some more text.";
             news5.Created = DateTime.Now;

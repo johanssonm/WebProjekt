@@ -4,6 +4,7 @@ $("#addnewsButton").click(function() {
     let Header = $("#Header").val();
     let Intro = $("#Intro").val();
     let Paragraf = $("#Paragraf").val();
+    let AuthorId = $("#AuthorId").val();
     let Categories = [];
 
     if( $('#CategoryId :selected').length > 0){
@@ -16,7 +17,7 @@ $("#addnewsButton").click(function() {
     $.ajax({
         type: "GET",
         data: { Header:Header,Intro:Intro,Paragraf:Paragraf,Categories:Categories },
-        url: "../news/AddNews",
+        url: "/news/AddNews",
         contentType: true,
         processData: true,
         success: function (response) {

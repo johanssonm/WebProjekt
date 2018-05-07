@@ -37,40 +37,40 @@ $("#editnewsButton").click(function () {
     });
 });
 
-$("#addnewsButton").click(function() {
-    // alert("Knappen funkar");    
+//$("#addnewsButton").click(function() {
+//    // alert("Knappen funkar");    
 
-    let Header = $("#Header").val();
-    let Intro = $("#Intro").val();
-    let Paragraf = $("#Paragraf").val();
-    let CategoryName = $("#CategoryName").val();
+//    let Header = $("#Header").val();
+//    let Intro = $("#Intro").val();
+//    let Paragraf = $("#Paragraf").val();
+//    let CategoryName = $("#CategoryName").val();
 
-    $.ajax({
-        type: "GET",
-        data: { Header,Intro,Paragraf,CategoryName },
-        url: "../news/AddNews",
-        contentType: true,
-        processData: true,
-        success: function (response) {
-            if (response.success) {
-                alert(response.message);
-                console.log("Success");
-                console.log(response);
+//    $.ajax({
+//        type: "GET",
+//        data: { Header,Intro,Paragraf,CategoryName },
+//        url: "../news/AddNews",
+//        contentType: true,
+//        processData: true,
+//        success: function (response) {
+//            if (response.success) {
+//                alert(response.message);
+//                console.log("Success");
+//                console.log(response);
 
-            } else {
-                // DoSomethingElse()
-                alert(response.responseText);
-                console.log("Faulty ok");
-            }
-        },
+//            } else {
+//                // DoSomethingElse()
+//                alert(response.responseText);
+//                console.log("Faulty ok");
+//            }
+//        },
 
-        error: function (response) {
-            alert("Error!");
-            console.log("Error");
-        }
+//        error: function (response) {
+//            alert("Error!");
+//            console.log("Error");
+//        }
 
-    });
-});
+//    });
+//});
 
 $("#removenewsButton").click(function () {
     // alert("Knappen funkar");    
@@ -143,7 +143,8 @@ $("#seedButton").click(function () {
         // processData: false,
         success: function (response) {
             if (response.success) {
-                alert(response.message);
+                //alert(response.message);
+                $("#seedalert").html(response.message);
                 console.log("Success");
                 console.log(response);
 

@@ -52,19 +52,7 @@
         <h1 class="display-1">Webprojekt &#9729;<div id="weatherWidget"><div class="loader"></div></div></h1>
         <hr/>
 
-        <div>
-            <h2 class="display-3">Rubrik</h2>
-
-            <p class="lead">Intro / ingress.</p>
-
-            <p>
-                <em class="blockquote">
-                    <strong>Paragraftext</strong> går också bra men se upp med de smaksatta varianter som har dykt upp på senare tid – en del innehåller sötningsmedel eller fruktjuice så var noga med att läsa innehållsförteckningen.
-                </em>
-            </p>
-
-            <p>Metagrejer, författare, hashtags etc.</p>
-        </div>
+<div id="article"></div>
     </div>
 
 
@@ -82,7 +70,31 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
+<script>
+    $(document).ready(function() {
 
+        $.ajax({
+            type: "GET",
+            url: "/news/RenderHTMLArticle",
+            contentType: true,
+            processData: true,
+            success: function (response) {
+                if (response.success) {
+                    //alert(response.message);
+                    $("#article").html(response.message);
+
+                    console.log("Success");
+                    console.log(response);
+
+                } else {
+                    // DoSomethingElse()
+                    alert(response.responseText);
+                    console.log("Faulty ok");
+                }
+            },
+        })
+    });
+</script>
 
 </body>
 
