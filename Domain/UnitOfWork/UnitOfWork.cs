@@ -14,6 +14,7 @@ namespace Domain
 
 
         public INewsRepository News { get; }
+        public IAuthorRepository Author { get; }
 
         public int Complete()
         {
