@@ -50,30 +50,25 @@
 
                 <a href="#menu-toggle" id="menu-toggle" class="btn btn-dark">&#9776; Meny</a>
 
-                <h1 class="display-1">Webprojekt &#9729;<div id="weatherWidget"><div class="loader"></div></div></h1>
+                <h1 class="display-2">Webprojekt &#9729;<div id="weatherWidget"><div class="loader"></div></div></h1>
                 <hr />
-                <div id="seedalert">
-                </div>
-                <button id="seedButton" class="btn btn-dark">Seed</button>
-
                 <div>
                     
                     <div id="message"></div>
 
                     <div class="form-group">
-                        <!--<form method="get" action="../news/AddNews">-->
 
-                            <h3>Add news</h3>
-                            <div class="form-group">
-                                <label>Header</label>
-                                <input class="form-control" id="Header" name="Header" placeholder="Cool story bro...">
-                                <label>Intro</label>
-                                <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
-                                <label>Paragraf</label>
-                                <textarea class="form-control" id="Paragraf" rows="3"></textarea>
-                            </div>
+                        <h3>Add news</h3>
+                        <div class="form-group">
+                            <label>Header</label>
+                            <input class="form-control" id="Header" name="Header" placeholder="Headertext...">
+                            <label>Intro</label>
+                            <input class="form-control" id="Intro" name="Intro" placeholder="Introtext...">
+                            <label>Paragraf</label>
+                            <textarea class="form-control" id="Paragraf" rows="3"></textarea>
+                        </div>
 
-                            <div class="form-group">
+                        <div class="form-group">
 
                             <select id="CategoryId" name="CategoryId" size="7" class="custom-select custom-select-lg mb-3" multiple>
 
@@ -98,13 +93,17 @@
 
                         </select>
 
-                            <button id="addnewsButton" class="btn btn-dark">Skapa artikel</button>
-                            
-                        <!--</form>-->
-
-                        <!--</form>-->
-
+                        <button id="addnewsButton" class="btn btn-dark">Skapa artikel</button>
+                        
                     </div>
+                    
+                    <div class="form-group">
+                        <div id="seedalert">
+                        </div>
+                        <button id="seedButton" class="btn btn-dark">Seed</button>
+                            
+                    </div>
+                    <div>
                 </div>
                 </div>
             </div>
