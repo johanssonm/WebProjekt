@@ -162,7 +162,7 @@ namespace WebApiLab.Controllers
         {
                 var sb = new StringBuilder();
 
-                sb.Append($"<div class=\"card\" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
+                sb.Append($"<div class=\"card \" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
                 sb.AppendLine("<div class=\"card-body\">");
                 sb.AppendLine($"<h5 class=\"card-title\">{news.Header}</h5>");
                 sb.AppendLine($"<p class=\"card-text\">{news.Intro}</p>");
@@ -250,84 +250,6 @@ namespace WebApiLab.Controllers
 
             }
             }
-
-        public string RenderHeader()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(
-                "<html><head><title>WebProjekt</title><link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\" integrity=\"sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4\" crossorigin=\"anonymous\"><link href=\"../public/assets/css/simple-sidebar.css\" rel=\"stylesheet\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body><div id=\"wrapper\"><div id=\"sidebar-wrapper\"><ul class=\"sidebar-nav\"><li class=\"sidebar-brand\"><a href=\"#\">WebProjekt &#9729;</a></li><li><a href=\"index.html\">Startsida</a></li><li><a href=\"create.html\">Skapa artikel</a></li><li><a href=\"edit.html\">Redigera artikel</a></li><li><a href=\"article.html\">Artikelvy</a></li><li><a href=\"archive.html\">Arkiv</a></li></ul></div><div id=\"page-content-wrapper\"><div class=\"container-fluid\">");
-            return sb.ToString();
-        }
-
-        public string RenderFooter()
-        {
-            var sb = new StringBuilder();
-
-            sb.Append("</div></div><script src=\"../public/assets/vendor/jquery/jquery.min.js\"></script><script src=\"../public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js\"></script><script src=\"../public/assets/js/news.js\"></script><script>$(\"#menu-toggle\").click(function(e) {e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\");});</script></body></html>");
-            return sb.ToString();
-        }
-
-        [Route("NewsTable")]
-        public IActionResult NewsTable()
-        {
-            List<News> news = new List<News>();
-
-            using (var client = new NewsContext())
-            {
-                news = (client.News.ToList());
-            }
-
-
-
-            var html = ConvertDataTableToHTML(ConvertNewsToDataTable(news));
-
-            return Content(html, "text/html");
-        }
-
-        public DataTable ConvertNewsToDataTable(List<News> list)
-        {
-            var newsList = new List<News>();
-
-            using (DataTable dt = new DataTable())
-            {
-                dt.TableName = "Nyheter";
-                dt.Columns.Add("ID", typeof(int));
-                dt.Columns.Add("Rubrik", typeof(string));
-                dt.Columns.Add("Intro", typeof(string));
-                dt.Columns.Add("Paragraf", typeof(string));
-                //dt.Columns.Add("Kategori", typeof(string));
-                dt.Columns.Add("Skapad", typeof(DateTime));
-                dt.Columns.Add("Ändrad", typeof(DateTime));
-
-                foreach (var news in list) // TODO: Convertera antal kategorier till kategorinamn(?)
-                {
-                    dt.Rows.Add(news.Id, news.Header, news.Intro, news.Paragraf, news.Created, news.Updated);
-                }
-
-                return dt;
-            }
-        }
-
-        public static string ConvertDataTableToHTML(DataTable dt)
-        {
-            string html = "<table>";
-            //add header row
-            html += "<tr>";
-            for (int i = 0; i < dt.Columns.Count; i++)
-                html += "<td>" + dt.Columns[i].ColumnName + "</td>";
-            html += "</tr>";
-            //add rows
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                html += "<tr>";
-                for (int j = 0; j < dt.Columns.Count; j++)
-                    html += "<td>" + dt.Rows[i][j].ToString() + "</td>";
-                html += "</tr>";
-            }
-            html += "</table>";
-            return html;
-        }
 
         [Route("CountNews")]
         public IActionResult CountNews()
