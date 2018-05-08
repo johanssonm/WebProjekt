@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistance
 {
-    //TODO Gör ett interface av contexten och injecta interfacet i controllern. För att enkelt kunna byta ut vilken context som används.
     public class NewsContext : DbContext
     {
         public DbSet<News> News { get; set; }

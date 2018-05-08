@@ -16,7 +16,7 @@ $("#addnewsButton").click(function() {
 
     $.ajax({
         type: "GET",
-        data: { Header:Header,Intro:Intro,Paragraf:Paragraf,CategoryId:Categories,AuthorId:AuthorId },
+        data: { Header:Header,Intro:Intro,Paragraf:Paragraf,Categories:Categories },
         url: "/news/AddNews",
         contentType: true,
         processData: true,

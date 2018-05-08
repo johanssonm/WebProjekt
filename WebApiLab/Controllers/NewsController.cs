@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
+using Services.OutputServices;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
@@ -13,11 +13,17 @@ using Services.OutputServices;
 
 namespace WebApiLab.Controllers
 {
-    [Route("News")] //:TODO: Döp om route. e.g. ta bort news från alla undersidor
+    [Route("news")] //:TODO: Döp om route. I.g. ta bort news från alla undersidor
     public class NewsController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork = new UnitOfWork(new NewsContext());
 
-        [Route("EditNews")]
+        //public NewsController(IUnitOfWork unitOfWork)
+        //{
+        //    _unitOfWork = unitOfWork;
+        //}
+
+        [Route("Edit")]
         public IActionResult EditNews(News news)
         {
 
@@ -48,20 +54,20 @@ namespace WebApiLab.Controllers
             });
         }
 
-        [Route("RemoveNews")]
-        public IActionResult RemoveNews(int? newsid) //TODO: Ta bort anonym typ
+        [Route("Remove")]
+        public IActionResult RemoveNews(News news)
         {
 
             using (var client = new NewsContext())
             {
 
-                var result = client.News.Single(x => x.Id == newsid.Value);
+                var result = client.News.Single(x => x.Id == news.Id);
                 client.Remove(result);
                 client.SaveChanges();
 
             }
 
-            var removedMessage = string.Format("Nyheten med ID {0} togs bort", newsid);
+            var removedMessage = string.Format("Nyheten med ID {0} togs bort", news.Id);
 
             return Json(new
             {
@@ -70,14 +76,14 @@ namespace WebApiLab.Controllers
             });
         }
 
-        [Route("AddNews")]
+        [Route("Add")]
         public IActionResult AddNews(News news, FormHelper formhelper)
         {
 
             if (news.Header == null || formhelper.CategoryId == null)
             {
                 return BadRequest(ModelState); // TODO: Märk upp meddelande för modelstate 
-                                              
+
             }
 
             using (var context = new NewsContext())
@@ -129,18 +135,16 @@ namespace WebApiLab.Controllers
         {
             List<News> news = new List<News>();
 
-            using (var client = new NewsContext())
-            {
-                news = (client.News.ToList());
-            }
+            news = _unitOfWork.News.GetAll().ToList();
 
             return Ok(news);
         }
 
+        //TODO Finns det någon användning av denna?
         [Route("GetNewsCategory")]
         public List<Category> GetNewsCategory(News news)
         {
- 
+
             using (var client = new NewsContext())
             {
                 var newsCategories = (client.NewsCategories.ToList());
@@ -151,54 +155,11 @@ namespace WebApiLab.Controllers
             }
         }
 
-        [Route("RenderCard")]
-        public string RenderCard(News news) //TODO: Flytta till ett interface
+        [Route("Index")] //TODO: Flytta till ett interface
+        public IActionResult Index()
         {
-                var sb = new StringBuilder();
 
-                sb.Append($"<div class=\"card \" style=\"width: 18rem; margin: 5px; float:left;\">\r\n  <img class=\"card-img-top\" src=\"...\" alt=\"{news.Id}\">");
-                sb.AppendLine("<div class=\"card-body\">");
-                sb.AppendLine($"<h5 class=\"card-title\">{news.Header}</h5>");
-                sb.AppendLine($"<p class=\"card-text\">{news.Intro}</p>");
-                sb.AppendLine($"<a href=\"/news/RenderArticle?newsid={news.Id}\" class=\"btn btn-dark\">Läs mer</a>\r\n  </div>\r\n</div>");
-
-
-
-                string html = sb.ToString();
-
-
-                return html;
-
-   
-        }
-
-
-        [Route("SingleArticle")]
-        public IActionResult SingleArticle(News news)
-        {
-            return Content(HtmlOutput.RenderArticle(news), "text/html");
-        }
-
-
-
-        [Route("FirstPage")] //TODO: Flytta till ett interface
-        public IActionResult FirstPage()
-        {
-            using (var client = new NewsContext())
-            {
-
-
-  
-                var sb = new StringBuilder();
-
-                foreach (var news in client.News.ToList())
-                {
-                    sb.Append(RenderCard(news));
-                }
-
-
-                string html = sb.ToString();
-
+                    string html = sb.Append(RenderCard(news));
 
                 return Json(new
                 {
@@ -208,33 +169,11 @@ namespace WebApiLab.Controllers
 
 
             }
-            }
-
-        [Route("CountNews")] 
-        public IActionResult CountNews()
-        {
-            int count = 0;
-
-            using (var client = new NewsContext())
-            {
-                count = client.News.Count();
-            }
-
-            var countMessage = String.Format("{0} number of news.", count);
-
-            return Json(new
-            {
-                success = true,
-                Message = countMessage
-            });
         }
 
-        [Route("SeedNews")]
-        public IActionResult SeedNews() //TODO: Hitta på ett bättre namn(?)
+        [Route("Seed")]
+        public IActionResult Seed() //TODO: Hitta på ett bättre namn(?)
         {
-
-            RecreateDatabase();
-
             SeedTheCategories();
 
             SeedTheAuthors();
@@ -242,7 +181,7 @@ namespace WebApiLab.Controllers
             SeedTheNews();
 
 
-            var seedMessage = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Databasen initierades med nyheter, kategorier och författare... \r\n</div>";
+            var seedMessage = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Kategorier, författare och nyheterna seedades...\r\n</div>";
 
             return Json(new
             {
@@ -251,7 +190,7 @@ namespace WebApiLab.Controllers
             });
         }
 
-        public void SeedTheNews() // TODO: Kanske flytta till en testdata-repository
+        public void SeedTheNews() // TODO: Kanske flytta till en testdata-behållare
         {
             var context = new NewsContext();
 
@@ -371,16 +310,6 @@ namespace WebApiLab.Controllers
             }
 
         }
-
-        private void RecreateDatabase()  // TODO: Kanske flytta till db-services
-        {
-            using (var client = new NewsContext())
-            {
-                client.Database.EnsureDeleted();
-                client.Database.EnsureCreated();
-            }
-        }
-
 
     }
 }

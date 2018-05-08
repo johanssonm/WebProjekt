@@ -17,11 +17,6 @@ namespace WebApiLab
             {
                 client.Database.EnsureDeleted();
                 client.Database.EnsureCreated();
-
-                NewsController.SeedTheCategories();
-
-                // NewsController.SeedTheAuthors();
-
             }
 
             WeatherCodes.Init(); //Initializing the weathercodes dictionary.
@@ -34,19 +29,9 @@ namespace WebApiLab
         {
             services.AddEntityFrameworkSqlite().AddDbContext<NewsContext>();
             services.AddSingleton<IWeatherService, OpenWeatherMapService>();
+            //services.AddSingleton<IUnitOfWork, UnitOfWork>();
             services.AddMvc();
         }
-
-        //public void ConfigureServices(IServiceCollection service)
-        //{
-        //    var container = new ServiceContainer();
-
-        //    container.Register<IWeatherService, OpenWeatherMapService>();
-        //    container.Register<IServiceCollection, ServiceCollection>();
-        //    container.r
-
-        //    service.AddMvc();
-        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
