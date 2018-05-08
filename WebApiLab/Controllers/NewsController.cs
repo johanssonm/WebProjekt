@@ -138,7 +138,6 @@ namespace WebApiLab.Controllers
             return Ok(news);
         }
 
-        //TODO Finns det någon användning av denna?
         [Route("GetNewsCategory")]
         public List<Category> GetNewsCategory(News news)
         {
