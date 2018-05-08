@@ -24,6 +24,13 @@ namespace WebApiLab.Controllers
         [Route("EditNews")]
         public IActionResult EditNews(News news)
         {
+            //var result = _unitOfWork.News.Get(news.Id);
+            //result.Header = news.Header;
+            //result.Intro = news.Intro;
+            //result.Paragraf = news.Paragraf;
+            //result.Updated = DateTime.Now;
+
+            //_unitOfWork.News
 
             using (var client = new NewsContext())
             {
@@ -55,15 +62,10 @@ namespace WebApiLab.Controllers
         [Route("RemoveNews")]
         public IActionResult RemoveNews(int? newsid) //TODO: Ta bort anonym typ
         {
-
-            using (var client = new NewsContext())
-            {
-
-                var result = client.News.Single(x => x.Id == newsid.Value);
-                client.Remove(result);
-                client.SaveChanges();
-
-            }
+            var result = _unitOfWork.News.Get(newsid);
+            _unitOfWork.News.Remove(result);
+            _unitOfWork.Complete();
+            _unitOfWork.Dispose();
 
             var removedMessage = string.Format("Nyheten med ID {0} togs bort", newsid);
 
@@ -84,40 +86,28 @@ namespace WebApiLab.Controllers
 
             }
 
-            using (var context = new NewsContext())
+            news.Created = DateTime.Now;
+            news.Updated = DateTime.Now;
+
+
+            var author = _unitOfWork.Author.Get(formhelper.AuthorId);
+            var authornews = new AuthorsNews(news, author);
+
+            foreach (var category in formhelper.CategoryId)
             {
-
-                news.Created = DateTime.Now;
-                news.Updated = DateTime.Now;
-
-                context.Add(news);
-
-                var author = context.Authors.Single(x => x.Id == formhelper.AuthorId);
-
-                var authornews = new AuthorsNews(news, author);
-
-                context.Add(authornews);
-
-                context.SaveChanges();
-
-
-                for (int i = 0; i < formhelper.CategoryId.Length; i++)
+                var tmpnewscategory = new NewsCategories
                 {
+                    NewsId = news.Id,
+                    CategoryId = category
+                };
 
-                    var tmpnewscategory = new NewsCategories()
-                    {
-                        NewsId = news.Id,
-                        CategoryId = formhelper.CategoryId[i]
-                    };
-
-                    context.Add(tmpnewscategory);
-                    context.SaveChanges();
-
-
-
-                }
-
+                _unitOfWork.NewsCategories.Add(tmpnewscategory);
             }
+
+            _unitOfWork.News.Add(news);
+            _unitOfWork.AuthorNews.Add(authornews);
+            _unitOfWork.Complete();
+            _unitOfWork.Dispose();
 
             var addedMessage = string.Format("Nyheten fick ID {0}", news.Id);
 
@@ -131,9 +121,8 @@ namespace WebApiLab.Controllers
         [Route("JsonFeed")]
         public IActionResult JsonFeed()
         {
-            List<News> news = new List<News>();
-
-            news = _unitOfWork.News.GetAll().ToList();
+            var news = _unitOfWork.News.GetAll().ToList();
+            _unitOfWork.Dispose();
 
             return Ok(news);
         }
@@ -142,14 +131,7 @@ namespace WebApiLab.Controllers
         public List<Category> GetNewsCategory(News news)
         {
 
-            using (var client = new NewsContext())
-            {
-                var newsCategories = (client.NewsCategories.ToList());
-                var categories = (client.Categories.ToList());
-
-                return categories;
-
-            }
+            return _unitOfWork.Category.GetAll().ToList();
         }
 
         [Route("RenderCard")]

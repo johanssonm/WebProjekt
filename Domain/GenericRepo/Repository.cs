@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain
 {
@@ -14,7 +14,7 @@ namespace Domain
             Context = context;
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(int? id)
         {
             return Context.Set<TEntity>().Find(id);
         }
